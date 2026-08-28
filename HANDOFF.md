@@ -16,6 +16,7 @@ The design intentionally avoids ordinary media trivia. Players are evaluated on 
 - Ship three carefully authored cases rather than an endless generator.
 - Use sparse electro-noir music rather than a generic jazz or saxophone loop.
 - Borrow interaction principles from Prime Suspects, Suspect Memories, Guess My Number, and Composer Muse, but do not reuse their code or assets.
+- Build the deterministic game shell locally first, then replace fixture investigation responses with the mandatory Gemini, Google Cloud Agent Builder, and Parallel runtime path.
 
 ## MVP
 
@@ -26,6 +27,14 @@ The design intentionally avoids ordinary media trivia. Players are evaluated on 
 5. Claim accusation and reveal.
 6. Evidence receipt and score.
 7. One complete electro-noir soundscape with semantic sound cues.
+
+## Development sequence
+
+1. Build the noir board, authored cases, investigation cards, scoring, and audio locally with deterministic fixture evidence.
+2. Add a narrow provider boundary for investigation requests and evidence responses.
+3. Implement the provider with Gemini on Google Cloud Agent Builder or Google ADK/Agent Engine.
+4. Connect Parallel Search at runtime and render its cited evidence on the board.
+5. Remove or disable fixture mode in the hosted submission path.
 
 ## Still to decide
 

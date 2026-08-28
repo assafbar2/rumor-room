@@ -19,6 +19,13 @@ Read these files before proposing or making changes:
 - Ask before committing or creating remote resources.
 - Ask separately before pushing or deploying.
 
+## Development sequence
+
+- Build and validate the deterministic UI, case loop, music, and sound locally first.
+- Keep investigation data behind a narrow interface so fixtures can later be replaced cleanly.
+- Before the game is considered complete, replace fixtures with Gemini on Google Cloud Agent Builder or Google ADK/Agent Engine calling Parallel Search at runtime.
+- Do not use non-Google AI APIs as temporary runtime substitutes.
+
 ## Design posture
 
 - Prioritize investigation and deduction over media trivia.

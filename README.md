@@ -15,6 +15,7 @@ The challenge is not remembering movie trivia. It is investigating efficiently, 
 Design only. No implementation has started.
 
 - [Full game and experience design](docs/design/2026-08-28-rumor-room-design.md)
+- [Product decisions](docs/DECISIONS.md)
 - [Cross-laptop handoff](HANDOFF.md)
 
 ## Hackathon constraints

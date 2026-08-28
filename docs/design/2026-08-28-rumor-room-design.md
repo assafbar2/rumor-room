@@ -235,7 +235,19 @@ Only after the complete MVP works:
 4. Add a second agent investigator whose strategy the player can challenge.
 5. Add shareable evidence receipts.
 
-## 14. Success criteria
+## 14. Development sequence
+
+The product may be designed and implemented locally before cloud integration, but the mandatory runtime path must remain an explicit completion gate.
+
+1. Build the full board interaction against deterministic evidence fixtures.
+2. Establish a narrow investigation interface that accepts a claim and research move and returns structured evidence.
+3. Implement that interface with Gemini on Google Cloud Agent Builder or Google ADK/Agent Engine.
+4. Connect the Gemini agent to Parallel Search at runtime.
+5. Demonstrate cited Parallel evidence changing the board in the hosted application.
+
+Do not introduce a temporary OpenAI, Anthropic, or other non-Google AI runtime. Fixture mode exists to support product development, not to bypass the final architecture.
+
+## 15. Success criteria
 
 The design succeeds when:
 
