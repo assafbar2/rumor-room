@@ -89,3 +89,16 @@ Remote Axe scans found zero WCAG A/AA violations on both the briefing and invest
 - Commit the completed project after explicit approval.
 - Push to GitHub after separate explicit approval.
 - Record the three-minute demo and add its public URL to the submission.
+
+## Repository CI
+
+GitHub Actions run `33245019947` validated commit `7c5c2e6` in 3 minutes 3 seconds:
+
+- Clean dependency install.
+- Zero-vulnerability audit.
+- Complete release gate.
+- Production Docker image build.
+- Chromium installation.
+- Eleven Playwright browser tests.
+
+The workflow was then updated to the current Node 24-compatible `actions/checkout@v7` and `actions/setup-node@v7` releases to remove the runner deprecation annotation.
