@@ -41,6 +41,9 @@ test('audio initializes only after consent and stays error-free', async ({ page 
   await page.goto('/');
   await page.getByRole('button', { name: 'Turn sound on' }).click();
   await expect(page.getByRole('button', { name: 'Mute sound' })).toBeVisible();
+  await openCase(page);
+  await page.getByRole('button', { name: /Fresh Cut/i }).click();
+  await expect(page.locator('.evidence-slip').first()).toBeVisible();
   await page.waitForTimeout(300);
   expect(errors).toEqual([]);
 });

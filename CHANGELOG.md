@@ -15,6 +15,11 @@
 - CI, bundle budgets, runtime-policy checks, deployment-config checks, production smoke checks, unit tests, Playwright campaign tests, mobile tests, and WCAG A/AA scans.
 - Complete architecture, case research, authoring, testing, deployment, demo, security, contribution, and submission documentation.
 
+### Fixed
+
+- Audio cues now run off the critical request path, so sound initialization can never delay or block an investigation.
+- Playwright explicitly forces fixture mode, keeping deterministic CI isolated from local live credentials.
+
 ### External release gates
 
 - Record and publish the three-minute demo.

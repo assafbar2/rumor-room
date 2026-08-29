@@ -13,7 +13,7 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   webServer: {
-    command: 'npm run dev',
+    command: 'APP_ENV=development INVESTIGATION_MODE=fixture npm run dev',
     url: 'http://127.0.0.1:5173/api/health',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

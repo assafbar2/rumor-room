@@ -79,7 +79,7 @@ export function useRumorRoom() {
       setError(null);
       setLatestEvidenceIds([]);
       showSoundCaption('Film reel catches — research launched.');
-      await noirAudio.cue('search');
+      void noirAudio.cue('search').catch(() => undefined);
 
       try {
         const result: InvestigationResponse = await api.investigate({
@@ -97,16 +97,16 @@ export function useRumorRoom() {
         const primary = result.evidence[0];
         if (primary?.quality === 'circular') {
           showSoundCaption('The echo returns — circular sourcing detected.');
-          await noirAudio.cue('circular');
+          void noirAudio.cue('circular').catch(() => undefined);
         } else if (primary?.quality === 'official') {
           showSoundCaption('The file drawer shuts — official record found.');
-          await noirAudio.cue('official');
+          void noirAudio.cue('official').catch(() => undefined);
         } else if (primary?.stance === 'contradicts') {
           showSoundCaption('Two notes resolve — material contradiction found.');
-          await noirAudio.cue('strong');
+          void noirAudio.cue('strong').catch(() => undefined);
         } else {
           showSoundCaption('The interval hangs — evidence remains uncertain.');
-          await noirAudio.cue('weak');
+          void noirAudio.cue('weak').catch(() => undefined);
         }
       } catch (caught) {
         setError(caught instanceof Error ? caught.message : 'The search failed. Your token was not spent.');
@@ -121,7 +121,7 @@ export function useRumorRoom() {
     if (!currentCase || !selectedClaimId || loadingMove) return;
     setError(null);
     showSoundCaption('The room goes silent — accusation filed.');
-    await noirAudio.cue('accuse');
+    void noirAudio.cue('accuse').catch(() => undefined);
 
     try {
       const result = await api.verdict({
@@ -138,7 +138,7 @@ export function useRumorRoom() {
           ? 'The projector steadies — verdict verified.'
           : 'The tape slows — the wrong claim took the fall.',
       );
-      await noirAudio.cue(result.correct ? 'correct' : 'incorrect');
+      void noirAudio.cue(result.correct ? 'correct' : 'incorrect').catch(() => undefined);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : 'The verdict desk is unavailable.');
     }
