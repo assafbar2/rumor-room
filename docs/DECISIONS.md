@@ -1,5 +1,30 @@
 # Product Decisions
 
+## 2026-08-28 — Resolve MVP open decisions
+
+### Decision
+
+- Keep the name **The Rumor Room**.
+- Use a controlled mix: one current-date case and two explicitly dated historical cases.
+- Ask the player only to accuse the unsupported claim; the board derives provisional state for every claim from collected evidence.
+- Exclude free-text investigation from the MVP. Four structured moves create strategy, predictable latency, safer queries, and a stronger demo.
+- Ship exactly three authored launch cases: stale information, circular sourcing, and headline distortion.
+
+## 2026-08-28 — Use one TypeScript application on Cloud Run
+
+### Decision
+
+Use React/Vite for the client and Express for the server in one TypeScript repository. Compile the server to JavaScript and serve both layers from one Cloud Run container.
+
+Use Google ADK's TypeScript package with Gemini 3.7 Flash on Vertex AI. Expose Parallel Search through an ADK `FunctionTool` using Parallel's official TypeScript SDK.
+
+### Guardrails
+
+- The live agent receives only authored public claims and fixed move objectives.
+- Every visible live citation must be present in the Parallel tool response.
+- Production must fail closed when live mode is not configured.
+- The Parallel API key remains server-side and is supplied through Secret Manager.
+
 ## 2026-08-28 — Develop locally, integrate mandatory Google runtime later
 
 ### Decision

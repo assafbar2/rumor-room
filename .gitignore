@@ -1,1 +1,11 @@
 .gstack/
+node_modules/
+dist/
+dist-server/
+coverage/
+playwright-report/
+test-results/
+.env
+.env.*.local
+*.log
+.DS_Store

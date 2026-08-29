@@ -2,7 +2,7 @@
 
 ## Summary
 
-The Rumor Room is a short noir investigation game for the Agentic Cinema hackathon. Players receive four plausible entertainment claims and four research tokens. They use structured investigation cards to search the live web through Parallel, build an evidence board, and accuse the unsupported claim.
+The Rumor Room is now a complete local web game for the Agentic Cinema hackathon. Players receive four plausible entertainment claims and four research tokens. They use structured investigation cards to search through deterministic fixtures locally or Gemini + Google ADK + Parallel in live mode, build an evidence board, and accuse the unsupported claim.
 
 The design intentionally avoids ordinary media trivia. Players are evaluated on investigation strategy, source provenance, freshness, and evidence quality rather than prior knowledge.
 
@@ -36,19 +36,24 @@ The design intentionally avoids ordinary media trivia. Players are evaluated on 
 4. Connect Parallel Search at runtime and render its cited evidence on the board.
 5. Remove or disable fixture mode in the hosted submission path.
 
-## Still to decide
+## Implementation status
 
-1. Whether claims are entirely current, historical-with-current-sourcing, or a controlled mix.
-2. The exact three launch cases.
-3. Whether the player labels every claim or only identifies the unsupported claim.
-4. Whether free-text investigation is excluded entirely or offered as one expensive wildcard move.
-5. Final project name.
+Completed locally:
 
-## Next session
+1. Responsive React investigation board and case briefing.
+2. Three authored, source-audited cases.
+3. Four research moves, evidence receipts, accusation, reveal, and scoring.
+4. Adaptive electro-noir audio with consent-first loading.
+5. Google ADK `LlmAgent` and Parallel `FunctionTool` provider.
+6. Mechanical citation allowlisting, session-scoped evidence, rate limiting, and production fixture guard.
+7. Unit, browser, mobile, build, audit, source-link, and production-startup validation.
+8. Docker, Cloud Build, deployment, demo, and submission documentation.
 
-Ask Codex:
+## Remaining external gates
 
-> Read README.md, HANDOFF.md, and docs/design/2026-08-28-rumor-room-design.md. Continue the design discussion from the open decisions. Do not implement until the design is explicitly approved.
+1. Approve committing the completed release.
+2. Approve pushing the release separately.
+3. Record the three-minute demo and add the video URL to `docs/SUBMISSION.md`.
 
 ## Important constraints
 
@@ -56,3 +61,9 @@ Ask Codex:
 - Gemini and Google Cloud Agent Builder are the only AI layer.
 - The repository must remain safe to publish publicly; never commit credentials.
 - Require explicit approval before committing, pushing, deploying, or creating remote resources.
+
+## Production
+
+- URL: `https://rumor-room-dpq2d26l7q-uc.a.run.app`
+- Revision: `rumor-room-00001-vl8`
+- Status: live Gemini + Parallel path verified in-browser and in Cloud Run logs.
