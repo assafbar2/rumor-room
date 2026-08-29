@@ -66,7 +66,7 @@ Agentic systems are also more convincing when the player controls the objective 
 
 - Hosted URL: `https://rumor-room-dpq2d26l7q-uc.a.run.app`
 - Public repository: `https://github.com/assafbar2/rumor-room`
-- Demo video: **add after recording**
+- Demo video: final 176.1-second MP4 recorded locally; public upload pending
 - License: MIT
 - Partner track: Parallel
 - Google Cloud proof: Cloud Run URL and Vertex AI runtime logs

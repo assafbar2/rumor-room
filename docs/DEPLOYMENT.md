@@ -1,6 +1,6 @@
 # Google Cloud Deployment
 
-Current verified deployment: `https://rumor-room-dpq2d26l7q-uc.a.run.app` on revision `rumor-room-00001-vl8`.
+Current verified deployment: `https://rumor-room-dpq2d26l7q-uc.a.run.app` on revision `rumor-room-00002-zhf`.
 
 The hosted submission runs one Cloud Run service containing the React client and the Google ADK server. Gemini runs on Vertex AI. The Parallel key stays in Secret Manager.
 

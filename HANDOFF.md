@@ -51,9 +51,7 @@ Completed locally:
 
 ## Remaining external gates
 
-1. Approve committing the completed release.
-2. Approve pushing the release separately.
-3. Record the three-minute demo and add the video URL to `docs/SUBMISSION.md`.
+1. Upload the finished 176.1-second demo video and add its public URL to `docs/SUBMISSION.md`.
 
 ## Important constraints
 
@@ -65,5 +63,5 @@ Completed locally:
 ## Production
 
 - URL: `https://rumor-room-dpq2d26l7q-uc.a.run.app`
-- Revision: `rumor-room-00001-vl8`
+- Revision: `rumor-room-00002-zhf`
 - Status: live Gemini + Parallel path verified in-browser and in Cloud Run logs.

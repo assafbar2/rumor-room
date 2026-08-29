@@ -7,9 +7,9 @@
 | Date | August 29, 2026 |
 | Google Cloud project | `direct-subject-497307-p8` |
 | Region | `us-central1` |
-| Cloud Build ID | `91a4bb72-66fc-4099-a0de-0c252de81d88` |
+| Cloud Build ID | `b4ed86b4-c6fc-4709-b6dc-5a844a7e8d8f` |
 | Cloud Run service | `rumor-room` |
-| Revision | `rumor-room-00001-vl8` |
+| Revision | `rumor-room-00002-zhf` |
 | Traffic | 100% |
 | Runtime identity | `rumor-room-runtime` service account |
 | Public URL | `https://rumor-room-dpq2d26l7q-uc.a.run.app` |
@@ -27,15 +27,15 @@ The runtime identity has Vertex AI User, log writer, and secret accessor permiss
 
 ## Deployment result
 
-Cloud Build completed successfully in 2 minutes 45 seconds. The Docker build:
+The current Cloud Build completed successfully in 2 minutes 42 seconds. The Docker build:
 
 - Installed from `package-lock.json`.
 - Reported zero npm vulnerabilities.
 - Compiled the React client and Node server.
 - Produced the expected split initial/audio bundles.
-- Pushed image digest `sha256:18872baeb73f895f621917f512e83c5c710a005b94de52284049da94ca1e7a60`.
+- Pushed image digest `sha256:d415b57baf14a8eb84129dfe549bc5faba2ea57e1240e9751f888d4305b27013`.
 
-Cloud Run created revision `rumor-room-00001-vl8` and routed 100% of traffic to it.
+Cloud Run created revision `rumor-room-00002-zhf` and routed 100% of traffic to it. This revision includes the sound-on critical-path fix: audio cues can never delay or block research requests.
 
 ## Production verification
 
@@ -57,18 +57,18 @@ The public site completed the Zelda `Fresh Cut` path:
 - Verdict: **You stopped the bad story.**
 - Score: 1,675.
 - Browser console errors: 0.
-- Investigation response: HTTP 200 in 16.44 seconds.
+- Investigation responses: HTTP 200 in 15.5–23.1 seconds during the final multi-case recording.
 - Verdict response: HTTP 200 in 0.01 seconds.
 
 ### Cloud Run evidence
 
-Cloud Run structured logs recorded Parallel search ID `search_3d599cd77091c8c1baa344deb90fad3d` with:
+Cloud Run structured logs recorded the final Zelda `Fresh Cut` Parallel search ID `search_61781428203e8b8f6b87da4af008f540` with:
 
 1. `Legend Zelda April 30 2027 Nintendo`
 2. `Zelda movie May 7 date changed`
 3. `Miyamoto Zelda worldwide release April 30`
 
-The log recorded six Parallel results, the `2024-08-28` freshness floor, and Gemini 3.7 Flash as the consuming model.
+The log recorded six Parallel results, the `2024-08-28` freshness floor, and Gemini 3.7 Flash as the consuming model. The final demo recording also logged the supporting Zelda trace, Barbie studio-line, and Death Stranding fresh-cut searches.
 
 ### Performance
 
@@ -92,7 +92,7 @@ Remote Axe scans found zero WCAG A/AA violations on both the briefing and invest
 
 ## Repository CI
 
-GitHub Actions run `33245019947` validated commit `7c5c2e6` in 3 minutes 3 seconds:
+GitHub Actions run `33245626106` validated audio-fix commit `8cf635b`:
 
 - Clean dependency install.
 - Zero-vulnerability audit.
@@ -101,4 +101,15 @@ GitHub Actions run `33245019947` validated commit `7c5c2e6` in 3 minutes 3 secon
 - Chromium installation.
 - Eleven Playwright browser tests.
 
-The workflow was then updated to the current Node 24-compatible `actions/checkout@v7` and `actions/setup-node@v7` releases to remove the runner deprecation annotation.
+The workflow uses the current Node 24-compatible `actions/checkout@v7` and `actions/setup-node@v7` releases.
+
+## Demo Artifact
+
+The final local submission video is `artifacts/rumor-room-demo.mp4`:
+
+- Duration: 176.1 seconds.
+- Resolution: 1440×900 at 30 fps.
+- Video: H.264.
+- Audio: normalized AAC voiceover.
+- Decode check: clean.
+- Content: three authored cases, four real production Parallel searches, three correct verdict receipts, and the live-status badge.

@@ -77,11 +77,12 @@ For every run:
 The same Zelda browser path passed on the public Cloud Run deployment on August 29, 2026.
 
 - Public URL: `https://rumor-room-dpq2d26l7q-uc.a.run.app`
-- Revision: `rumor-room-00001-vl8`
-- Production Parallel search ID: `search_3d599cd77091c8c1baa344deb90fad3d`
-- Investigation latency: 16.44 seconds
+- Revision: `rumor-room-00002-zhf`
+- Production Parallel search ID: `search_61781428203e8b8f6b87da4af008f540`
+- Investigation latency observed during final recording: 15.5–23.1 seconds
 - Correct verdict score: 1,675
 - Console errors: 0
 - WCAG A/AA violations: 0 on desktop and mobile
+- Sound-on searches: verified non-blocking in production
 
 See `docs/DEPLOYMENT_REPORT.md` for build, runtime, performance, and log evidence.
