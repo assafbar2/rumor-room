@@ -7,9 +7,9 @@
 | Date | August 29, 2026 |
 | Google Cloud project | `direct-subject-497307-p8` |
 | Region | `us-central1` |
-| Cloud Build ID | `e569edf9-d023-4baa-ba9b-cc511bf86e25` |
+| Cloud Build ID | `aed70f48-f6a7-45e8-8045-9648fed79e1c` |
 | Cloud Run service | `rumor-room` |
-| Revision | `rumor-room-00004-vgq` |
+| Revision | `rumor-room-00005-8zc` |
 | Traffic | 100% |
 | Runtime identity | `rumor-room-runtime` service account |
 | Public URL | `https://rumor-room-dpq2d26l7q-uc.a.run.app` |
@@ -27,15 +27,15 @@ The runtime identity has Vertex AI User, log writer, and secret accessor permiss
 
 ## Deployment result
 
-The current Cloud Build completed successfully in 2 minutes 34 seconds. The Docker build:
+The current Cloud Build completed successfully in 2 minutes 39 seconds. The Docker build:
 
 - Installed from `package-lock.json`.
 - Reported zero npm vulnerabilities.
 - Compiled the React client and Node server.
 - Produced the expected split initial/audio bundles.
-- Pushed image digest `sha256:66aada0be7af0c1087f33cbbf93fe22cca8382f5ec77d73f433edfaa2773215b`.
+- Pushed image digest `sha256:78d92cf45471e5170c371fe08eb91f3cf8f96a23f599117f4840829b87ce8791`.
 
-Cloud Run created revision `rumor-room-00004-vgq` and routed 100% of traffic to it. This revision includes the clarified game flow, campaign scoring, persistent claim selection, louder/valid Tone.js notes, and the production audio-worker CSP fix.
+Cloud Run created revision `rumor-room-00005-8zc` and routed 100% of traffic to it. This revision also sets the HTML shell to `Cache-Control: no-store`, keeps hashed assets long-lived, and adds a real SVG favicon so new revisions appear immediately to testers.
 
 ## Production verification
 
@@ -89,6 +89,7 @@ Remote Axe scans found zero WCAG A/AA violations on both the briefing and invest
 - Status badge displays **Parallel live search**.
 - Turning sound on produces an immediate **Sound on — audio check** caption and cue.
 - Tone.js's `blob:` worker is allowed only through `worker-src`; no console errors remain.
+- The HTML shell is not cached across revisions; a normal reload receives the current interface.
 - The selected claim has a persistent solid outline and **Selected** ribbon.
 - The board displays the three-step flow, research-turn count, campaign score, and **Start over** action.
 
