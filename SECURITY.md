@@ -17,6 +17,7 @@ Never commit API keys, Google Cloud credentials, service-account files, tokens, 
 - Production refuses fixture mode.
 - Investigation requests are rate-limited.
 - Responses include a restrictive Content Security Policy and common browser security headers.
+- The CSP permits `blob:` only for `worker-src`, which Tone.js requires for browser audio; scripts, frames, and network requests remain same-origin restricted.
 
 ## Reporting a vulnerability
 

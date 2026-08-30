@@ -21,6 +21,9 @@ try {
   for (const header of ['content-security-policy', 'x-content-type-options', 'x-frame-options', 'referrer-policy']) {
     if (!page.headers.get(header)) throw new Error(`Production response is missing ${header}.`);
   }
+  if (!page.headers.get('content-security-policy')?.includes("worker-src 'self' blob:")) {
+    throw new Error('Production CSP must allow the Tone.js blob worker.');
+  }
 } finally {
   server.kill('SIGTERM');
 }

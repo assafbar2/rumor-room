@@ -187,10 +187,15 @@ export function useRumorRoom() {
   const toggleMute = useCallback(async () => {
     const nextMuted = !muted;
     setMuted(nextMuted);
-    await noirAudio.setMuted(nextMuted);
-    if (!nextMuted) {
-      showSoundCaption('Sound on — audio check.');
-      void noirAudio.cue('strong').catch(() => undefined);
+    try {
+      await noirAudio.setMuted(nextMuted);
+      if (!nextMuted) {
+        showSoundCaption('Sound on — audio check.');
+        void noirAudio.cue('strong').catch(() => undefined);
+      }
+    } catch {
+      setMuted(true);
+      showSoundCaption('Sound could not start — check browser audio permissions.');
     }
   }, [muted, showSoundCaption]);
 

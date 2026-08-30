@@ -19,6 +19,7 @@
 
 - Audio cues now run off the critical request path, so sound initialization can never delay or block an investigation.
 - Replaced Unicode musical accidentals with Tone.js note names, raised the restrained mix to an audible level, and added an immediate sound-on confirmation cue.
+- Allowed Tone.js's isolated blob worker in the production Content Security Policy and roll the sound toggle back if browser audio initialization fails.
 - Made the selected claim persistent and unmistakable with a labeled ribbon and solid outline.
 - Playwright explicitly forces fixture mode, keeping deterministic CI isolated from local live credentials.
 
