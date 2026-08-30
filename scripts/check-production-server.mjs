@@ -18,6 +18,9 @@ try {
 
   const page = await fetch(`http://127.0.0.1:${port}/`);
   if (!page.ok) throw new Error(`Compiled client returned ${page.status}.`);
+  if (page.headers.get('cache-control') !== 'no-store') {
+    throw new Error('Production HTML must not be cached across deployments.');
+  }
   for (const header of ['content-security-policy', 'x-content-type-options', 'x-frame-options', 'referrer-policy']) {
     if (!page.headers.get(header)) throw new Error(`Production response is missing ${header}.`);
   }

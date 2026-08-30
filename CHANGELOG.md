@@ -22,6 +22,7 @@
 - Allowed Tone.js's isolated blob worker in the production Content Security Policy and roll the sound toggle back if browser audio initialization fails.
 - Made the selected claim persistent and unmistakable with a labeled ribbon and solid outline.
 - Playwright explicitly forces fixture mode, keeping deterministic CI isolated from local live credentials.
+- The production HTML shell now uses `no-store` while hashed assets remain long-lived, preventing stale UI after a new revision deploys.
 
 ### Changed
 

@@ -157,8 +157,15 @@ app.post('/api/verdict', (request, response) => {
 
 if (config.nodeEnv === 'production') {
   const staticDirectory = path.resolve(process.cwd(), 'dist');
-  app.use(express.static(staticDirectory, { maxAge: '1h' }));
-  app.get('*path', (_request, response) => response.sendFile(path.join(staticDirectory, 'index.html')));
+  const sendIndex = (_request: express.Request, response: express.Response) => {
+    response.setHeader('Cache-Control', 'no-store');
+    response.sendFile(path.join(staticDirectory, 'index.html'));
+  };
+
+  app.get('/', sendIndex);
+  app.use('/assets', express.static(path.join(staticDirectory, 'assets'), { maxAge: '1y', immutable: true }));
+  app.use(express.static(staticDirectory, { index: false, maxAge: '1h' }));
+  app.get('*path', sendIndex);
 }
 
 app.listen(config.port, () => {
