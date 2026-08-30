@@ -26,7 +26,7 @@ Live result:
 - Polygon and Deadline independently report the same correction.
 - Gemini classifies the claim as contradicted and the Nintendo receipt as official.
 
-The complete browser flow displayed **Parallel live wire**, spent one token, pinned three live receipts, changed Claim B to **High suspicion**, produced a correct verdict, and scored 1,675. The browser console remained error-free.
+The complete browser flow displayed **Parallel live search**, spent one research turn, pinned three live receipts, changed Claim B to **High suspicion**, produced a correct verdict, and scored 1,675. The browser console remained error-free.
 
 ## Case 027 — Barbie / Studio Line
 

@@ -28,9 +28,15 @@ export function Briefing({ caseFile, casePosition, totalCases, onStart }: Briefi
           <span>Objective</span>
           <strong>{caseFile.mission}</strong>
         </div>
+        <div className="how-to-sequence" aria-label="How to play">
+          <div><span>1</span><strong>Select a claim</strong></div>
+          <div><span>2</span><strong>Spend one research turn</strong></div>
+          <div><span>3</span><strong>Switch claims or investigate again</strong></div>
+          <div><span>4</span><strong>Accuse whenever you are ready</strong></div>
+        </div>
         <div className="briefing-facts">
           <div><span>Claims</span><strong>04</strong></div>
-          <div><span>Research tokens</span><strong>04</strong></div>
+          <div><span>Research turns</span><strong>04</strong></div>
           <div><span>Case pattern</span><strong>{mechanicLabels[caseFile.mechanic]}</strong></div>
         </div>
         <button className="primary-button briefing-button" onClick={onStart}>

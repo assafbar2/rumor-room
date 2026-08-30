@@ -11,7 +11,13 @@ export default function App() {
     <div className="app-frame">
       <div className="film-grain" aria-hidden="true" />
       <a className="skip-link" href="#main-game">Skip to investigation</a>
-      <TopBar runtime={game.runtime} muted={game.muted} onToggleMute={game.toggleMute} />
+      <TopBar
+        runtime={game.runtime}
+        muted={game.muted}
+        showRestart={game.phase !== 'loading' && (game.phase !== 'briefing' || casePosition > 1 || game.campaignScore > 0)}
+        onToggleMute={game.toggleMute}
+        onRestart={game.restartCampaign}
+      />
       <div className={`sound-caption ${game.soundCaption ? 'is-visible' : ''}`} role="status" aria-live="polite">
         {game.soundCaption}
       </div>
@@ -40,6 +46,8 @@ export default function App() {
             casePosition={casePosition}
             totalCases={game.cases.length}
             tokens={game.tokens}
+            campaignScore={game.campaignScore}
+            completedCases={game.completedCases}
             selectedClaimId={game.selectedClaimId}
             evidence={game.evidence}
             evidenceByClaim={game.evidenceByClaim}

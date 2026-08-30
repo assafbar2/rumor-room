@@ -2,7 +2,7 @@
 
 ## Summary
 
-The Rumor Room is now a complete local web game for the Agentic Cinema hackathon. Players receive four plausible entertainment claims and four research tokens. They use structured investigation cards to search through deterministic fixtures locally or Gemini + Google ADK + Parallel in live mode, build an evidence board, and accuse the unsupported claim.
+The Rumor Room is now a complete web game for the Agentic Cinema hackathon. Players receive four plausible entertainment claims and four research tokens, meaning four total research turns. They use structured investigation cards with saved evidence locally or Gemini + Google ADK + Parallel in live mode, build an evidence board, and accuse the unsupported claim.
 
 The design intentionally avoids ordinary media trivia. Players are evaluated on investigation strategy, source provenance, freshness, and evidence quality rather than prior knowledge.
 

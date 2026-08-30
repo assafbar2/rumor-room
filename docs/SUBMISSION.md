@@ -14,11 +14,11 @@ Entertainment rumors are rarely cleanly true or false. A real announcement becom
 
 ## What it does
 
-The player enters a studio newsroom with four plausible entertainment claims and four research tokens. They choose a claim and play one of four structured moves: Trace It, Second Source, Studio Line, or Fresh Cut.
+The player enters a studio newsroom with four plausible entertainment claims and four research tokens—meaning four total research turns. On each turn, they can select any claim and play one of four structured move types: Trace It, Second Source, Studio Line, or Fresh Cut.
 
 Each move invokes a Gemini investigator built with Google ADK. Gemini calls Parallel Search at runtime, evaluates the returned sources for provenance, freshness, independence, and exact wording, then adds dated source receipts to the physical case board. The player accuses the unsupported claim and receives a scored evidence receipt explaining the complete source trail.
 
-The launch build contains three authored cases focused on stale information, circular sourcing, and headline distortion.
+The launch build contains three hand-designed cases: one about outdated information, one about many articles repeating the same source, and one about a headline overstating what its source says.
 
 ## How we built it
 
@@ -37,7 +37,7 @@ The live provider exposes Parallel as a Google ADK `FunctionTool`. Gemini must u
 
 The central design challenge was making search strategic. A free-form chat box would reward query volume and make Parallel feel interchangeable. Limiting the player to four typed research moves creates meaningful opportunity cost and makes the quality of the question part of the game.
 
-The engineering challenge was treating model output as untrusted. A prompt saying “do not invent citations” was not enough, so we implemented a mechanical citation allowlist tied to the actual Parallel tool call. We also separated deterministic fixtures from the live provider and made production refuse to start unless the live Gemini→Parallel path is enabled.
+The engineering challenge was treating model output as untrusted. A prompt saying “do not invent citations” was not enough, so we implemented a mechanical citation allowlist tied to the actual Parallel tool call. We also separated saved test evidence from the live provider and made production refuse to start unless the live Gemini→Parallel path is enabled.
 
 ## Accomplishments
 

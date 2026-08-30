@@ -29,6 +29,8 @@ export function useRumorRoom() {
   const [error, setError] = useState<string | null>(null);
   const [muted, setMuted] = useState(true);
   const [soundCaption, setSoundCaption] = useState('');
+  const [campaignScore, setCampaignScore] = useState(0);
+  const [completedCases, setCompletedCases] = useState(0);
   const captionTimer = useRef<number | null>(null);
 
   const currentCase = cases[caseIndex];
@@ -132,6 +134,8 @@ export function useRumorRoom() {
         tokensRemaining: tokens,
       });
       setVerdict(result);
+      setCampaignScore((current) => current + result.score.total);
+      setCompletedCases((current) => current + 1);
       setPhase('verdict');
       showSoundCaption(
         result.correct
@@ -146,7 +150,8 @@ export function useRumorRoom() {
 
   const nextCase = useCallback(() => {
     window.scrollTo(0, 0);
-    const nextIndex = (caseIndex + 1) % cases.length;
+    const finishedCampaign = caseIndex === cases.length - 1;
+    const nextIndex = finishedCampaign ? 0 : caseIndex + 1;
     setCaseIndex(nextIndex);
     setPhase('briefing');
     setTokens(4);
@@ -156,13 +161,38 @@ export function useRumorRoom() {
     setVerdict(null);
     setError(null);
     setAnalysis('The desk is quiet. Choose a claim and decide what kind of question will separate it from the others.');
+    if (finishedCampaign) {
+      setCampaignScore(0);
+      setCompletedCases(0);
+      sessionId.current = crypto.randomUUID();
+    }
   }, [caseIndex, cases.length]);
+
+  const restartCampaign = useCallback(() => {
+    window.scrollTo(0, 0);
+    sessionId.current = crypto.randomUUID();
+    setCaseIndex(0);
+    setPhase('briefing');
+    setTokens(4);
+    setSelectedClaimId(null);
+    setEvidence([]);
+    setLatestEvidenceIds([]);
+    setVerdict(null);
+    setError(null);
+    setCampaignScore(0);
+    setCompletedCases(0);
+    setAnalysis('The desk is quiet. Choose a claim and decide what kind of question will separate it from the others.');
+  }, []);
 
   const toggleMute = useCallback(async () => {
     const nextMuted = !muted;
     setMuted(nextMuted);
     await noirAudio.setMuted(nextMuted);
-  }, [muted]);
+    if (!nextMuted) {
+      showSoundCaption('Sound on — audio check.');
+      void noirAudio.cue('strong').catch(() => undefined);
+    }
+  }, [muted, showSoundCaption]);
 
   return {
     cases,
@@ -180,11 +210,14 @@ export function useRumorRoom() {
     error,
     muted,
     soundCaption,
+    campaignScore,
+    completedCases,
     startCase,
     selectClaim,
     investigate,
     accuse,
     nextCase,
+    restartCampaign,
     toggleMute,
   };
 }

@@ -5,6 +5,7 @@ interface VerdictReceiptProps {
   accusedClaim: Claim;
   actualClaim: Claim;
   verdict: VerdictResponse;
+  campaignScore: number;
   casePosition: number;
   totalCases: number;
   onNext: () => void;
@@ -15,6 +16,7 @@ export function VerdictReceipt({
   accusedClaim,
   actualClaim,
   verdict,
+  campaignScore,
   casePosition,
   totalCases,
   onNext,
@@ -42,9 +44,14 @@ export function VerdictReceipt({
           <span>Case score</span>
           <strong>{verdict.score.total.toLocaleString()}</strong>
         </div>
+        <div className="campaign-total">
+          <span>Campaign total</span>
+          <strong>{campaignScore.toLocaleString()}</strong>
+        </div>
+        <p className="score-explanation">Case points reward a correct verdict, unused turns, independent evidence, and circular-source detection. The campaign total adds each completed case until you start over.</p>
         <p className="verification-note"><span>Why this case matters:</span> {verdict.verificationNote}</p>
         <button className="primary-button" onClick={onNext}>
-          {casePosition < totalCases ? 'Take the next case' : 'Return to case one'}
+          {casePosition < totalCases ? 'Take the next case' : 'Start a new campaign'}
           <span aria-hidden="true">→</span>
         </button>
       </div>

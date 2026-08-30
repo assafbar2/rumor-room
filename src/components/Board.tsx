@@ -9,6 +9,8 @@ interface BoardProps {
   casePosition: number;
   totalCases: number;
   tokens: number;
+  campaignScore: number;
+  completedCases: number;
   selectedClaimId: string | null;
   evidence: EvidenceSlip[];
   evidenceByClaim: Record<string, EvidenceSlip[]>;
@@ -37,18 +39,32 @@ export function Board(props: BoardProps) {
             <h1>{props.caseFile.title}</h1>
             <p className="dateline">{props.caseFile.dateline}</p>
           </div>
-          <div className="token-counter" aria-label={`${props.tokens} research tokens remaining`}>
-            <span>Research tokens</span>
-            <div>
-              {[0, 1, 2, 3].map((token) => <i key={token} className={token < props.tokens ? 'is-full' : ''} />)}
+          <div className="case-stats">
+            <div className="campaign-score-readout" aria-label={`Campaign score ${props.campaignScore}`}>
+              <span>Campaign score</span>
+              <strong>{props.campaignScore.toLocaleString()}</strong>
+              <small>{props.completedCases} of {props.totalCases} cases closed</small>
             </div>
-            <strong>{props.tokens.toString().padStart(2, '0')}</strong>
+            <div className="token-counter" aria-label={`${props.tokens} research turns remaining`}>
+              <span>Research turns</span>
+              <div>
+                {[0, 1, 2, 3].map((token) => <i key={token} className={token < props.tokens ? 'is-full' : ''} />)}
+              </div>
+              <strong>{props.tokens.toString().padStart(2, '0')}</strong>
+            </div>
           </div>
         </div>
 
         <div className="board-layout">
           <div className="investigation-column">
             <section className="claims-section" aria-labelledby="claims-title">
+              <div className="flow-strip">
+                <span><b>1</b> Select any claim</span>
+                <i aria-hidden="true">→</i>
+                <span><b>2</b> Apply one research move</span>
+                <i aria-hidden="true">→</i>
+                <span><b>3</b> Switch, repeat, or accuse</span>
+              </div>
               <div className="section-heading compact">
                 <div>
                   <p className="eyebrow">Suspect claims</p>
@@ -108,6 +124,7 @@ export function Board(props: BoardProps) {
           accusedClaim={selectedClaim}
           actualClaim={actualClaim}
           verdict={props.verdict}
+          campaignScore={props.campaignScore}
           casePosition={props.casePosition}
           totalCases={props.totalCases}
           onNext={props.onNext}

@@ -35,7 +35,7 @@ export function EvidenceTray({ evidence, latestEvidenceIds, analysis }: Evidence
           <div className="empty-tray">
             <span className="empty-crosshair" aria-hidden="true">＋</span>
             <p>No evidence pinned.</p>
-            <small>Select a claim and spend a research token.</small>
+            <small>Select a claim and spend a research turn.</small>
           </div>
         ) : (
           orderedEvidence.map((slip) => (

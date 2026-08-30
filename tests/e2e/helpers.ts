@@ -8,5 +8,5 @@ export async function openCase(page: Page) {
 export async function accuseAndContinue(page: Page) {
   await page.getByRole('button', { name: 'Accuse this claim' }).click();
   await expect(page.getByText('You stopped the bad story.')).toBeVisible();
-  await page.getByRole('button', { name: /Take the next case|Return to case one/i }).click();
+  await page.getByRole('button', { name: /Take the next case|Start a new campaign/i }).click();
 }

@@ -18,7 +18,15 @@
 ### Fixed
 
 - Audio cues now run off the critical request path, so sound initialization can never delay or block an investigation.
+- Replaced Unicode musical accidentals with Tone.js note names, raised the restrained mix to an audible level, and added an immediate sound-on confirmation cue.
+- Made the selected claim persistent and unmistakable with a labeled ribbon and solid outline.
 - Playwright explicitly forces fixture mode, keeping deterministic CI isolated from local live credentials.
+
+### Changed
+
+- Clarified that four tokens mean four total research turns and that players may switch claims, repeat move types, or accuse at any time.
+- Added an accumulating three-case campaign score and a visible Start Over action.
+- Renamed the runtime status to **Parallel live search** and the local status to **Saved test evidence**.
 
 ### External release gates
 

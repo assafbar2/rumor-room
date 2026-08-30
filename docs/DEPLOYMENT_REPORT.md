@@ -50,7 +50,7 @@ Cloud Run created revision `rumor-room-00002-zhf` and routed 100% of traffic to 
 
 The public site completed the Zelda `Fresh Cut` path:
 
-- Status badge: **Parallel live wire**.
+- Status badge: **Parallel live search**.
 - Token count: 4 → 3.
 - Claim state: **High suspicion**.
 - Live publishers: Nintendo, Polygon, and Deadline.
@@ -86,9 +86,9 @@ Remote Axe scans found zero WCAG A/AA violations on both the briefing and invest
 
 ## Remaining release work
 
-- Commit the completed project after explicit approval.
-- Push to GitHub after separate explicit approval.
-- Record the three-minute demo and add its public URL to the submission.
+- Resolve the organizer eligibility issue described in the final project review.
+- Replace public demo screenshots/video sources with a fictional or mock corpus if submitting under the organizer's published-material guidance.
+- Publish the repository and compliant video only after those issues are resolved.
 
 ## Repository CI
 
@@ -99,7 +99,7 @@ GitHub Actions run `33245626106` validated audio-fix commit `8cf635b`:
 - Complete release gate.
 - Production Docker image build.
 - Chromium installation.
-- Eleven Playwright browser tests.
+- Fourteen Playwright browser tests.
 
 The workflow uses the current Node 24-compatible `actions/checkout@v7` and `actions/setup-node@v7` releases.
 
@@ -112,4 +112,4 @@ The final local submission video is `artifacts/rumor-room-demo.mp4`:
 - Video: H.264.
 - Audio: normalized AAC voiceover.
 - Decode check: clean.
-- Content: three authored cases, four real production Parallel searches, three correct verdict receipts, and the live-status badge.
+- Content: three hand-designed cases, four real production Parallel searches, three correct verdict receipts, and the live-status badge.

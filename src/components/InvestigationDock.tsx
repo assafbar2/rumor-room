@@ -62,7 +62,7 @@ export function InvestigationDock({ tokens, selectedClaim, loadingMove, onInvest
               <span className="move-title">{loading ? 'Searching…' : move.title}</span>
               <span className="move-description">{move.description}</span>
               <span className="move-best">Best for: {move.bestFor}</span>
-              <span className="token-cost"><i /> 1 token</span>
+              <span className="token-cost"><i /> 1 turn</span>
             </button>
           );
         })}

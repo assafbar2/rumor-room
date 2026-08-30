@@ -4,7 +4,11 @@
 
 Built for the **Agentic Cinema: The Blockbuster Hackathon**, Parallel partner track.
 
-**[Play the live game](https://rumor-room-dpq2d26l7q-uc.a.run.app)**
+## Play the game
+
+### **[Launch The Rumor Room →](https://rumor-room-dpq2d26l7q-uc.a.run.app)**
+
+No installation is required. This is the live Google Cloud deployment using Gemini and Parallel Search.
 
 ![The Rumor Room investigation board](docs/assets/rumor-room-board.png)
 
@@ -21,14 +25,18 @@ Built for the **Agentic Cinema: The Blockbuster Hackathon**, Parallel partner tr
 
 ## The pitch
 
-Four plausible claims arrive at the newsroom. The player has four research tokens and four structured moves:
+Four plausible claims arrive at the newsroom. Exactly one is unsupported, outdated, or materially misleading within the case's stated time window.
+
+The player gets **four research tokens—meaning four total research turns**. On each turn, select any claim and apply one of four move types:
 
 - **Trace It** — find the earliest discoverable origin.
 - **Second Source** — look for genuinely independent corroboration.
 - **Studio Line** — prioritize the organizations closest to the facts.
 - **Fresh Cut** — search after the claim for corrections, denials, and changed plans.
 
-Every move calls a Gemini investigator built with Google ADK. Gemini chooses targeted queries, calls Parallel Search as a tool, evaluates provenance and freshness, and returns dated source receipts that physically change the case board. The player then accuses one claim and receives a scored evidence receipt.
+You may switch claims between turns, focus multiple turns on one claim, or reuse a move type. You may also accuse at any time—including before using every turn.
+
+Every research turn calls a Gemini investigator built with Google ADK. Gemini chooses a research objective, calls Parallel Search as a tool, evaluates provenance and freshness, and returns dated source receipts that physically change the case board. The player then accuses one claim and receives a scored evidence receipt.
 
 ## Why the integrations matter
 
@@ -42,18 +50,43 @@ Gemini is the investigator: it translates each strategic move into a focused res
 
 ## Current build
 
-- Three complete authored cases: stale information, circular sourcing, and headline distortion.
-- Four-claim / four-token game loop with accusation, reveal, and scoring.
+- Three hand-designed cases. One teaches outdated information, one teaches how many articles can repeat the same source, and one teaches how a headline can overstate what its source actually says.
+- Four claims, four research turns, one accusation, a per-case score, and an accumulating three-case campaign score.
 - Responsive physical evidence-board interface.
 - Adaptive Tone.js electro-noir soundtrack and semantic cues.
 - Mute control, audio-independent play, visible state communication, keyboard focus, and reduced-motion support.
-- Deterministic local evidence mode for repeatable development.
-- Production guard that refuses to launch the hosted submission in fixture mode.
+- Saved-evidence test mode for repeatable local development and automated tests. The alternative is live mode, where Gemini calls Parallel Search on every research turn.
+- A deployment safety check that refuses to start production unless live Gemini + Parallel mode is enabled. This prevents accidentally submitting a version that uses saved test evidence.
 - Google ADK 2.0 + Gemini 3.7 Flash + Parallel Search live provider.
 - Unit, integrity, trust-boundary, desktop browser, and mobile browser tests.
 - Cloud Run container and Cloud Build deployment configuration.
 
-The complete Gemini → Google ADK → Parallel path has been exercised across all three authored cases and through a full browser verdict on the public Cloud Run deployment.
+The complete Gemini → Google ADK → Parallel path has been exercised across all three hand-designed cases and through a full browser verdict on the public Cloud Run deployment.
+
+## Game rules at a glance
+
+- There are **three cases** in the current game.
+- Each case presents **four claims**. Exactly one is unsupported, outdated, or materially misleading for that case—not necessarily a completely invented statement.
+- You have **four research turns** per case. The round tokens are simply a visual counter for those four turns.
+- Select any claim, then apply a research move to that selected claim.
+- You can switch claims between turns, reuse a move type, or focus several turns on one claim.
+- You can accuse at any time. A strong first search can solve a case; three searches are not mandatory.
+- The receipt shows a case score. The campaign score accumulates across all three cases and resets when you choose **Start over** or finish the campaign.
+
+## Runtime integration proof
+
+### Gemini and Google ADK
+
+- [`server/providers/live-provider.ts`](server/providers/live-provider.ts) imports `LlmAgent`, `Runner`, `FunctionTool`, and `InMemorySessionService` from `@google/adk`, creates the Gemini investigator, and executes it for every live research turn.
+- [`cloudbuild.yaml`](cloudbuild.yaml) configures Gemini Enterprise mode, the Google Cloud project, Gemini 3.7 Flash, and the dedicated `rumor-room-runtime` service account.
+- Google does **not** use a committed API key. Local development uses Application Default Credentials. Production uses the Cloud Run service account identity.
+
+### Parallel Search
+
+- The `parallel_search` `FunctionTool` in [`server/providers/live-provider.ts`](server/providers/live-provider.ts) calls `parallel.search(...)` from the official `parallel-web` SDK.
+- The Parallel key is stored in Google Secret Manager as `parallel-api-key` and injected into Cloud Run by [`cloudbuild.yaml`](cloudbuild.yaml). Its value is never sent to the browser or committed.
+- [`docs/LIVE_VALIDATION.md`](docs/LIVE_VALIDATION.md) records real search IDs, effective queries, cited URLs, and all three live case results.
+- [`docs/DEPLOYMENT_REPORT.md`](docs/DEPLOYMENT_REPORT.md) records the Cloud Run revision and the structured production log proving the Parallel tool executed.
 
 ## Architecture
 
@@ -69,7 +102,7 @@ flowchart LR
     UI --> SCORE[Session-scoped verdict scoring]
 ```
 
-The client never receives the answer key. Evidence and scores are scoped to a generated player session. Production requires `INVESTIGATION_MODE=live`; fixture mode is intentionally limited to local development.
+The client never receives the answer key. Evidence and scores are scoped to a generated player session. Production requires `INVESTIGATION_MODE=live`; saved test evidence is intentionally limited to local development and automated testing.
 
 See [Architecture](docs/ARCHITECTURE.md) for the full request path and trust boundaries.
 
@@ -83,7 +116,7 @@ cp .env.example .env
 npm run dev
 ```
 
-Open `http://127.0.0.1:5173`. The default `.env.example` uses deterministic fixture evidence.
+Open `http://127.0.0.1:5173`. By default, local development uses saved evidence so every test run receives the same sources and scores. Set live mode to use the real Gemini + Parallel path instead.
 
 ## Run the live investigator locally
 
@@ -99,7 +132,7 @@ GOOGLE_MODEL=gemini-3.7-flash
 PARALLEL_API_KEY=your-key
 ```
 
-Then run `npm run dev`. The top-right status changes from **Training archive** to **Parallel live wire**.
+Then run `npm run dev`. The top-right status changes from **Saved test evidence** to **Parallel live search**.
 
 ## Quality gates
 
@@ -112,7 +145,7 @@ npm audit           # dependency advisory check
 Validated locally on August 28, 2026:
 
 - 16 unit/integrity/trust-boundary tests passing.
-- 11 browser scenarios passing across desktop and mobile with zero skips.
+- 14 browser scenarios passing across desktop and mobile with zero skips.
 - Full three-case campaign and incorrect-verdict path covered in Chromium.
 - Automated WCAG A/AA scans passing on the briefing and board at desktop and mobile sizes.
 - Clean initial-load console and successful investigation/verdict network flow.

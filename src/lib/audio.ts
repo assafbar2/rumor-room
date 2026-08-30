@@ -16,20 +16,20 @@ class NoirAudioEngine {
     const Tone = await import('tone');
     this.tone = Tone;
     await Tone.start();
-    Tone.getDestination().volume.value = -12;
+    Tone.getDestination().volume.value = -5;
 
     this.bass = new Tone.MonoSynth({
       oscillator: { type: 'sine' },
       envelope: { attack: 0.05, decay: 0.35, sustain: 0.18, release: 1.4 },
       filterEnvelope: { attack: 0.03, decay: 0.3, sustain: 0.1, release: 1, baseFrequency: 60, octaves: 2 },
     }).toDestination();
-    this.bass.volume.value = -17;
+    this.bass.volume.value = -9;
 
     this.piano = new Tone.PolySynth(Tone.Synth, {
       oscillator: { type: 'triangle8' },
       envelope: { attack: 0.01, decay: 0.9, sustain: 0, release: 1.7 },
     }).toDestination();
-    this.piano.volume.value = -24;
+    this.piano.volume.value = -14;
 
     const echo = new Tone.FeedbackDelay('8n', 0.23).toDestination();
     echo.wet.value = 0.22;
@@ -39,11 +39,11 @@ class NoirAudioEngine {
       envelope: { attack: 0.01, decay: 1.2, sustain: 0, release: 1.8 },
       modulationEnvelope: { attack: 0.01, decay: 0.5, sustain: 0, release: 0.8 },
     }).connect(echo);
-    this.vibraphone.volume.value = -18;
+    this.vibraphone.volume.value = -9;
 
     const filter = new Tone.Filter(420, 'lowpass').toDestination();
     this.noise = new Tone.Noise('pink').connect(filter);
-    this.noise.volume.value = -38;
+    this.noise.volume.value = -34;
     this.noise.start();
 
     Tone.getTransport().bpm.value = 61;
@@ -74,12 +74,12 @@ class NoirAudioEngine {
     const now = Tone.now();
 
     if (cue === 'search') {
-      this.piano?.triggerAttackRelease(['D3', 'E♭3'], '8n', now, 0.2);
+      this.piano?.triggerAttackRelease(['D3', 'Eb3'], '8n', now, 0.35);
     } else if (cue === 'strong') {
       this.vibraphone?.triggerAttackRelease('A4', '8n', now, 0.3);
       this.vibraphone?.triggerAttackRelease('F4', '4n', now + 0.18, 0.28);
     } else if (cue === 'weak') {
-      this.piano?.triggerAttackRelease(['C4', 'D♭4'], '4n', now, 0.22);
+      this.piano?.triggerAttackRelease(['C4', 'Db4'], '4n', now, 0.3);
     } else if (cue === 'circular') {
       this.vibraphone?.triggerAttackRelease('D4', '16n', now, 0.24);
       this.vibraphone?.triggerAttackRelease('D4', '16n', now + 0.2, 0.16);
@@ -94,7 +94,7 @@ class NoirAudioEngine {
       this.vibraphone?.triggerAttackRelease('A3', '2n', now + 0.34, 0.25);
       Tone.getTransport().start('+0.8');
     } else if (cue === 'incorrect') {
-      this.piano?.triggerAttackRelease(['E♭3', 'E3'], '1n', now, 0.18);
+      this.piano?.triggerAttackRelease(['Eb3', 'E3'], '1n', now, 0.28);
     }
   }
 }

@@ -33,6 +33,9 @@ The unit suite covers:
 - Mobile accusation usability.
 - WCAG A/AA scans for the briefing and board on desktop and mobile.
 - Audio initialization only after explicit consent.
+- Audible confirmation and a successful investigation with sound enabled.
+- Persistent selected-claim styling while switching suspects.
+- Campaign score accumulation and Start Over reset behavior.
 
 ## Manual browser QA completed
 

@@ -23,6 +23,7 @@ export function ClaimCard({ claim, evidence, selected, disabled, onSelect }: Cla
       aria-pressed={selected}
     >
       <span className="claim-clip" aria-hidden="true" />
+      {selected && <span className="selected-ribbon">Selected</span>}
       <span className="claim-label">{claim.label}</span>
       <span className="claim-statement">{claim.statement}</span>
       <span className="claim-context">{claim.context}</span>

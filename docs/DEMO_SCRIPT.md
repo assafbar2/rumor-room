@@ -50,13 +50,13 @@ Show the live status badge and a brief architecture slide or the README diagram.
 
 Flash the other two case folders.
 
-> “The three authored cases teach three transferable skills: stale information, circular sourcing, and headline distortion. It works on desktop and mobile, with adaptive electro-noir audio, but remains fully playable muted. The Rumor Room turns agentic search into strategy.”
+> “The three hand-designed cases teach three transferable skills: detecting outdated information, recognizing when many articles repeat one source, and spotting a headline that overstates its evidence. It works on desktop and mobile, with adaptive electro-noir audio, but remains fully playable muted. The Rumor Room turns agentic search into strategy.”
 
 End on the evidence receipt and title.
 
 ## Recording checklist
 
-- Use the deployed **Parallel live wire** runtime, never fixture mode.
+- Use the deployed **Parallel live search** runtime, never saved test evidence.
 - Pre-warm the Cloud Run service and test both searches immediately before recording.
 - Keep the browser at 1280×900 or 1440×900.
 - Turn sound on before the case opens.

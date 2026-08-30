@@ -96,7 +96,7 @@ The browser creates a random UUID for each play session. Evidence returned by `/
 The scoring model rewards:
 
 - Correct accusation with material evidence.
-- Unused research tokens.
+- Unused research turns.
 - Independent sources for the accused claim.
 - Detection of circular sourcing.
 
@@ -112,7 +112,7 @@ Cloud Run serves the client and API from one origin. The runtime service account
 
 ## Failure behavior
 
-- Failed searches do not spend a research token.
+- Failed searches do not spend a research turn.
 - Invalid agent JSON produces a generic 502 response and no evidence.
 - Hallucinated citations are discarded.
 - Missing live credentials mark the runtime unhealthy.
