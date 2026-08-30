@@ -63,5 +63,5 @@ Completed locally:
 ## Production
 
 - URL: `https://rumor-room-dpq2d26l7q-uc.a.run.app`
-- Revision: `rumor-room-00002-zhf`
+- Revision: `rumor-room-00004-vgq`
 - Status: live Gemini + Parallel path verified in-browser and in Cloud Run logs.

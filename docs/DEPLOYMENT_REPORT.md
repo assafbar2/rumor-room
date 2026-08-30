@@ -7,9 +7,9 @@
 | Date | August 29, 2026 |
 | Google Cloud project | `direct-subject-497307-p8` |
 | Region | `us-central1` |
-| Cloud Build ID | `b4ed86b4-c6fc-4709-b6dc-5a844a7e8d8f` |
+| Cloud Build ID | `e569edf9-d023-4baa-ba9b-cc511bf86e25` |
 | Cloud Run service | `rumor-room` |
-| Revision | `rumor-room-00002-zhf` |
+| Revision | `rumor-room-00004-vgq` |
 | Traffic | 100% |
 | Runtime identity | `rumor-room-runtime` service account |
 | Public URL | `https://rumor-room-dpq2d26l7q-uc.a.run.app` |
@@ -27,15 +27,15 @@ The runtime identity has Vertex AI User, log writer, and secret accessor permiss
 
 ## Deployment result
 
-The current Cloud Build completed successfully in 2 minutes 42 seconds. The Docker build:
+The current Cloud Build completed successfully in 2 minutes 34 seconds. The Docker build:
 
 - Installed from `package-lock.json`.
 - Reported zero npm vulnerabilities.
 - Compiled the React client and Node server.
 - Produced the expected split initial/audio bundles.
-- Pushed image digest `sha256:d415b57baf14a8eb84129dfe549bc5faba2ea57e1240e9751f888d4305b27013`.
+- Pushed image digest `sha256:66aada0be7af0c1087f33cbbf93fe22cca8382f5ec77d73f433edfaa2773215b`.
 
-Cloud Run created revision `rumor-room-00002-zhf` and routed 100% of traffic to it. This revision includes the sound-on critical-path fix: audio cues can never delay or block research requests.
+Cloud Run created revision `rumor-room-00004-vgq` and routed 100% of traffic to it. This revision includes the clarified game flow, campaign scoring, persistent claim selection, louder/valid Tone.js notes, and the production audio-worker CSP fix.
 
 ## Production verification
 
@@ -83,6 +83,14 @@ A fresh Chromium context measured:
 ### Accessibility
 
 Remote Axe scans found zero WCAG A/AA violations on both the briefing and investigation board at desktop and Pixel 7 dimensions.
+
+### Production audio and clarity verification
+
+- Status badge displays **Parallel live search**.
+- Turning sound on produces an immediate **Sound on — audio check** caption and cue.
+- Tone.js's `blob:` worker is allowed only through `worker-src`; no console errors remain.
+- The selected claim has a persistent solid outline and **Selected** ribbon.
+- The board displays the three-step flow, research-turn count, campaign score, and **Start over** action.
 
 ## Remaining release work
 
