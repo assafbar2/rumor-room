@@ -1,6 +1,6 @@
 # The Rumor Room — Game and Experience Design
 
-**Status:** Approved direction; implementation not started
+**Status:** Approved direction; implemented and deployed. The shipped runtime uses Gemini through Google ADK on Vertex AI (see `docs/ARCHITECTURE.md`). References below to "Google Cloud Agent Builder" describe the option space at design time.
 **Track:** Parallel
 **Format:** Four-to-six-minute web investigation game
 

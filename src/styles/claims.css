@@ -1,0 +1,168 @@
+.claim-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(10px, 1.3vw, 18px);
+}
+
+.claim-card {
+  position: relative;
+  display: flex;
+  min-height: 284px;
+  padding: 28px 20px 18px;
+  flex-direction: column;
+  align-items: stretch;
+  border: 1px solid rgba(23, 25, 29, 0.7);
+  color: var(--ink);
+  background: var(--paper);
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 11px 22px rgba(0, 0, 0, 0.26), inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  transform: rotate(-0.25deg);
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.claim-card:nth-child(even) {
+  transform: rotate(0.25deg);
+}
+
+.claim-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.11;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence baseFrequency='.62' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+.claim-card:hover:not(:disabled) {
+  z-index: 2;
+  transform: translateY(-6px) rotate(0);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.35), 0 0 0 2px rgba(214, 154, 69, 0.32);
+}
+
+.claim-card.is-selected {
+  z-index: 3;
+  transform: translateY(-5px) rotate(0);
+  outline: 3px solid var(--tungsten);
+  outline-offset: 2px;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.38), 0 0 22px rgba(214, 154, 69, 0.2);
+}
+
+.claim-card.is-suspicious {
+  filter: sepia(0.18) contrast(1.02);
+}
+
+.claim-card.is-suspicious::before {
+  content: '?';
+  position: absolute;
+  z-index: 4;
+  right: 10px;
+  top: 3px;
+  color: rgba(158, 48, 48, 0.76);
+  font: 700 3.8rem/1 var(--condensed);
+  transform: rotate(10deg);
+}
+
+.claim-card.is-cleared {
+  filter: brightness(0.76) saturate(0.55);
+}
+
+.claim-card:disabled {
+  cursor: wait;
+}
+
+.claim-clip {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  z-index: 5;
+  width: 38px;
+  height: 18px;
+  border: 2px solid #8a8d89;
+  border-radius: 8px 8px 2px 2px;
+  background: #5c6060;
+  box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.35), 0 4px 4px rgba(0, 0, 0, 0.2);
+  transform: translateX(-50%);
+}
+
+.selected-ribbon {
+  position: absolute;
+  z-index: 6;
+  top: 9px;
+  right: 9px;
+  padding: 5px 7px 4px;
+  border: 1px solid #8b6734;
+  color: #6d4b1f;
+  background: rgba(229, 220, 199, 0.9);
+  font: 600 0.48rem/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.claim-label {
+  position: relative;
+  z-index: 2;
+  color: #7f5e32;
+  font: 600 0.64rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.claim-statement {
+  position: relative;
+  z-index: 2;
+  margin-top: 16px;
+  font: 600 clamp(1.06rem, 1.35vw, 1.35rem)/1.22 var(--condensed);
+  letter-spacing: 0.012em;
+}
+
+.claim-context {
+  position: relative;
+  z-index: 2;
+  margin: 10px 0 auto;
+  color: #676155;
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.claim-readout,
+.claim-tallies {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+  color: #6f685c;
+  font: 500 0.56rem/1 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.confidence-track {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 4px;
+  margin-top: 8px;
+  background: rgba(23, 25, 29, 0.16);
+  overflow: hidden;
+}
+
+.confidence-track > span {
+  display: block;
+  height: 100%;
+  background: var(--red);
+  transition: width 500ms ease;
+}
+
+.claim-card.is-cleared .confidence-track > span {
+  background: var(--green);
+}
+
+.claim-tallies {
+  justify-content: flex-end;
+  margin-top: 7px;
+}

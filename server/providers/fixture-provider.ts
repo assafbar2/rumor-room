@@ -1,4 +1,4 @@
-import { getFixtureEvidence } from '../../shared/cases.js';
+import { getFixtureEvidence } from '../../shared/cases/index.js';
 import type { InvestigationRequest, InvestigationResponse } from '../../shared/types.js';
 
 export async function investigateWithFixtures(

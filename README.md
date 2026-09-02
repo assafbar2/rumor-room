@@ -6,9 +6,25 @@ Built for the **Agentic Cinema: The Blockbuster Hackathon**, Parallel partner tr
 
 ## Play the game
 
-### **[Launch The Rumor Room →](https://rumor-room-dpq2d26l7q-uc.a.run.app)**
+### **[Launch The Rumor Room →](https://rumor-room-dpq2d26l7q-uc.a.run.app)** · **[Watch the 3-minute demo →](https://youtu.be/ovbrx_9RvN8)**
 
 No installation is required. This is the live Google Cloud deployment using Gemini and Parallel Search.
+
+## Proof this is live
+
+Every research turn on the hosted site runs Gemini through Google ADK, which calls Parallel Search as a tool. The board can only show URLs that came back from that Parallel call.
+
+| What | Evidence |
+| --- | --- |
+| Hosted app | [`rumor-room-dpq2d26l7q-uc.a.run.app`](https://rumor-room-dpq2d26l7q-uc.a.run.app) on Google Cloud Run, revision `rumor-room-00006-2tj` |
+| Status badge in-game | Top right reads **Parallel live search** (fixture mode cannot boot in production) |
+| Runtime Parallel call | Cloud Run log entry `parallel_search_completed` with search ID `search_85ade4fdd5244f13f2e9fa33bed17c66`, six results, consumed by `gemini-3.7-flash`; the entry lists Gemini's three queries (`agentQueries`) and the two case-authored coverage queries (`coverageQueries`) separately |
+| Three more live search IDs, one per case | `search_714f7e26…`, `search_72d1bc94…`, `search_0344fc17…` in [docs/internal/LIVE_VALIDATION.md](docs/internal/LIVE_VALIDATION.md) |
+| Google AI layer | [`server/providers/live-provider.ts`](server/providers/live-provider.ts): `LlmAgent`, `Runner`, `FunctionTool` from `@google/adk`; no other model provider in the dependency tree |
+| Citation trust boundary | `requireParallelCitations()` drops any URL Gemini returns that Parallel did not |
+| Demo video | [youtu.be/ovbrx_9RvN8](https://youtu.be/ovbrx_9RvN8) — 179-second walkthrough with three live production Parallel searches, captioned |
+
+![Production board with live Parallel evidence](docs/assets/rumor-room-production-live.png)
 
 ![The Rumor Room investigation board](docs/assets/rumor-room-board.png)
 
@@ -18,8 +34,6 @@ No installation is required. This is the live Google Cloud deployment using Gemi
 ![Case briefing](docs/assets/rumor-room-briefing.png)
 
 ![Evidence receipt](docs/assets/rumor-room-receipt.png)
-
-![Production board with live Parallel evidence](docs/assets/rumor-room-production-live.png)
 
 </details>
 
@@ -70,7 +84,7 @@ The complete Gemini → Google ADK → Parallel path has been exercised across a
 - You have **four research turns** per case. The round tokens are simply a visual counter for those four turns.
 - Select any claim, then apply a research move to that selected claim.
 - You can switch claims between turns, reuse a move type, or focus several turns on one claim.
-- You can accuse at any time. A strong first search can solve a case; three searches are not mandatory.
+- You can accuse at any time. A strong first search can solve a case; using all four turns is not mandatory.
 - The receipt shows a case score. The campaign score accumulates across all three cases and resets when you choose **Start over** or finish the campaign.
 
 ## Runtime integration proof
@@ -85,8 +99,8 @@ The complete Gemini → Google ADK → Parallel path has been exercised across a
 
 - The `parallel_search` `FunctionTool` in [`server/providers/live-provider.ts`](server/providers/live-provider.ts) calls `parallel.search(...)` from the official `parallel-web` SDK.
 - The Parallel key is stored in Google Secret Manager as `parallel-api-key` and injected into Cloud Run by [`cloudbuild.yaml`](cloudbuild.yaml). Its value is never sent to the browser or committed.
-- [`docs/LIVE_VALIDATION.md`](docs/LIVE_VALIDATION.md) records real search IDs, effective queries, cited URLs, and all three live case results.
-- [`docs/DEPLOYMENT_REPORT.md`](docs/DEPLOYMENT_REPORT.md) records the Cloud Run revision and the structured production log proving the Parallel tool executed.
+- [`docs/internal/LIVE_VALIDATION.md`](docs/internal/LIVE_VALIDATION.md) records real search IDs, effective queries, cited URLs, and all three live case results.
+- [`docs/internal/DEPLOYMENT_REPORT.md`](docs/internal/DEPLOYMENT_REPORT.md) records the Cloud Run revision and the structured production log proving the Parallel tool executed.
 
 ## Architecture
 
@@ -159,22 +173,27 @@ Validated locally on August 28, 2026:
 
 ## Deployment
 
-The repository includes a multi-stage `Dockerfile` and `cloudbuild.yaml` for Google Cloud Run. Follow [Deployment](docs/DEPLOYMENT.md); it keeps the Parallel key in Secret Manager and runs the service with a dedicated identity that can call Vertex AI.
+The repository includes a multi-stage `Dockerfile` and `cloudbuild.yaml` for Google Cloud Run. Follow the [deployment runbook](docs/internal/DEPLOYMENT.md); it keeps the Parallel key in Secret Manager and runs the service with a dedicated identity that can call Vertex AI.
 
 ## Documentation
 
-- [Architecture and trust boundaries](docs/ARCHITECTURE.md)
-- [Case research and source record](docs/CASE_RESEARCH.md)
-- [Case authoring guide](docs/CASE_AUTHORING.md)
-- [Testing and QA evidence](docs/TESTING.md)
-- [Live Gemini + Parallel validation](docs/LIVE_VALIDATION.md)
-- [Google Cloud deployment runbook](docs/DEPLOYMENT.md)
-- [Production deployment report](docs/DEPLOYMENT_REPORT.md)
+Start here:
+
+- [Architecture and trust boundaries](docs/ARCHITECTURE.md) — request path, query composition, citation allowlist, session state.
+- [Devpost submission](docs/SUBMISSION.md)
 - [Three-minute demo script](docs/DEMO_SCRIPT.md)
-- [Devpost submission draft](docs/SUBMISSION.md)
-- [Product decisions](docs/DECISIONS.md)
-- [Changelog](CHANGELOG.md)
-- [Security policy](SECURITY.md)
+- [Case authoring guide](docs/CASE_AUTHORING.md)
+- [Original design document](docs/design/2026-08-28-rumor-room-design.md)
+
+Verification and operations records, in [`docs/internal/`](docs/internal/):
+
+- [Live Gemini + Parallel validation](docs/internal/LIVE_VALIDATION.md) — search IDs and results for all three cases.
+- [Production deployment report](docs/internal/DEPLOYMENT_REPORT.md) — Cloud Run revision, logs, performance, accessibility.
+- [Testing and QA evidence](docs/internal/TESTING.md)
+- [Case research and source record](docs/internal/CASE_RESEARCH.md)
+- [Google Cloud deployment runbook](docs/internal/DEPLOYMENT.md)
+- [Product decisions](docs/internal/DECISIONS.md)
+- [Changelog](CHANGELOG.md) · [Security policy](SECURITY.md) · [Contributing](CONTRIBUTING.md)
 
 ## License
 

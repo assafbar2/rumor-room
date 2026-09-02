@@ -9,7 +9,7 @@ import {
   type LlmResponse,
 } from '@google/adk';
 import { describe, expect, it, vi } from 'vitest';
-import { createParallelTool, parseAgentJson, requireParallelCitations } from './live-provider.js';
+import { createParallelTool, mergeSearchQueries, parseAgentJson, requireParallelCitations } from './live-provider.js';
 
 const response = {
   analysis: 'The later official record contradicts the old date.',
@@ -53,6 +53,27 @@ describe('live provider trust boundary', () => {
     expect(() => parseAgentJson(JSON.stringify(unsafe))).toThrow(/HTTP or HTTPS/);
   });
 
+  it('keeps every Gemini query ahead of authored coverage queries', () => {
+    const agentQueries = ['gemini query one', 'gemini query two', 'gemini query three'];
+    const coverage = ['authored one', 'gemini query two', 'authored two', 'authored three'];
+    const merged = mergeSearchQueries(agentQueries, coverage);
+
+    expect(merged.slice(0, 3)).toEqual(agentQueries);
+    expect(merged).toEqual([...agentQueries, 'authored one', 'authored two']);
+  });
+
+  it('passes Gemini queries first to Parallel when coverage hints are supplied', async () => {
+    const search = vi.fn(async () => ({ search_id: 's', session_id: 'x', results: [] }));
+    const tool = createParallelTool(new Set(), { search }, { queryHints: ['authored hint', 'example film date changed'] });
+    await runScriptedInvestigation(tool);
+
+    expect(search).toHaveBeenCalledWith(
+      expect.objectContaining({
+        search_queries: ['example film release date', 'example film date changed', 'authored hint'],
+      }),
+    );
+  });
+
   it('runs the Parallel tool through the real Google ADK runner loop', async () => {
     const capturedUrls = new Set<string>();
     const search = vi.fn(async () => ({
@@ -68,32 +89,36 @@ describe('live provider trust boundary', () => {
       ],
     }));
     const tool = createParallelTool(capturedUrls, { search });
-    const model = new ScriptedInvestigatorModel();
-    const agent = new LlmAgent({
-      name: 'test_investigator',
-      model,
-      instruction: 'Call the search tool, then return the evidence JSON.',
-      tools: [tool],
-    });
-    const runner = new Runner({
-      appName: 'rumor_room_test',
-      agent,
-      sessionService: new InMemorySessionService(),
-    });
-
-    let finalText = '';
-    for await (const event of runner.runEphemeral({
-      userId: 'test-player',
-      newMessage: { role: 'user', parts: [{ text: 'Investigate the date.' }] },
-    })) {
-      if (isFinalResponse(event)) finalText = stringifyContent(event);
-    }
+    const finalText = await runScriptedInvestigation(tool);
 
     expect(search).toHaveBeenCalledOnce();
     expect(capturedUrls).toEqual(new Set(['https://example.com/verified']));
     expect(parseAgentJson(finalText)).toEqual(response);
   });
 });
+
+async function runScriptedInvestigation(tool: ReturnType<typeof createParallelTool>) {
+  const agent = new LlmAgent({
+    name: 'test_investigator',
+    model: new ScriptedInvestigatorModel(),
+    instruction: 'Call the search tool, then return the evidence JSON.',
+    tools: [tool],
+  });
+  const runner = new Runner({
+    appName: 'rumor_room_test',
+    agent,
+    sessionService: new InMemorySessionService(),
+  });
+
+  let finalText = '';
+  for await (const event of runner.runEphemeral({
+    userId: 'test-player',
+    newMessage: { role: 'user', parts: [{ text: 'Investigate the date.' }] },
+  })) {
+    if (isFinalResponse(event)) finalText = stringifyContent(event);
+  }
+  return finalText;
+}
 
 class ScriptedInvestigatorModel extends BaseLlm {
   private turn = 0;

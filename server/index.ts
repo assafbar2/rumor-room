@@ -2,7 +2,7 @@ import compression from 'compression';
 import express from 'express';
 import path from 'node:path';
 import { z } from 'zod';
-import { cases, getCase, publicCase } from '../shared/cases.js';
+import { cases, getCase, publicCase } from '../shared/cases/index.js';
 import { researchMoves } from '../shared/types.js';
 import type { EvidenceSlip, InvestigationRequest, VerdictRequest } from '../shared/types.js';
 import { config, liveRuntimeReady } from './config.js';

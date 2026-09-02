@@ -61,7 +61,7 @@ Primary and corroborating sources:
 
 Before a public demo or judging session:
 
-1. Run the source-link audit described in `docs/TESTING.md`.
+1. Run the source-link audit described in `docs/internal/TESTING.md`.
 2. Confirm the current-date case still has exactly one unsupported claim.
 3. Keep historical cases pinned to their printed dateline.
 4. Replace any source that becomes inaccessible without changing the intended provenance lesson.

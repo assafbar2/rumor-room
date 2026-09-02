@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { cases, getFixtureEvidence, publicCase } from './cases.js';
-import { researchMoves } from './types.js';
+import { cases, getFixtureEvidence, publicCase } from './index.js';
+import { researchMoves } from '../types.js';
 
 describe('authored cases', () => {
   it('ships exactly three complete four-claim cases', () => {

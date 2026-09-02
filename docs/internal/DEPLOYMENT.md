@@ -67,6 +67,7 @@ The pipeline:
 5. Mounts the Parallel key from Secret Manager.
 6. Configures Gemini 3.7 Flash on Vertex AI in the global location.
 7. Runs as the dedicated `rumor-room-runtime` service account.
+8. Caps the service at one instance so a session's in-process evidence ledger serves both its investigations and its verdict.
 
 Images are tagged with Cloud Build's guaranteed `BUILD_ID`, so both repository-triggered and manual `gcloud builds submit` deployments produce a valid immutable tag.
 
@@ -91,7 +92,7 @@ Expected shape:
 }
 ```
 
-Then play one complete case, open every returned receipt, inspect Cloud Run logs, and run the smoke path in `docs/TESTING.md`.
+Then play one complete case, open every returned receipt, inspect Cloud Run logs, and run the smoke path in `docs/internal/TESTING.md`.
 
 ## Rollback
 

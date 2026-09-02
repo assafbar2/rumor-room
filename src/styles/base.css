@@ -1,0 +1,56 @@
+:root {
+  color-scheme: dark;
+  font-family: 'Newsreader', Georgia, serif;
+  color: #e8dfca;
+  background: #090a0c;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --room: #090a0c;
+  --board: #181a1e;
+  --board-raised: #202329;
+  --paper: #d7ceb8;
+  --paper-light: #e5dcc7;
+  --ink: #17191d;
+  --tungsten: #d69a45;
+  --tungsten-pale: #edc887;
+  --red: #9e3030;
+  --red-bright: #cb5751;
+  --green: #617568;
+  --green-bright: #8fa698;
+  --steel: #7e858d;
+  --line: rgba(231, 220, 196, 0.16);
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --condensed: 'Archivo Narrow', 'Arial Narrow', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--room);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--room);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--tungsten-pale);
+  outline-offset: 4px;
+}

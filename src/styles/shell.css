@@ -1,0 +1,59 @@
+.app-frame {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--room);
+}
+
+.film-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+.skip-link {
+  position: fixed;
+  top: -80px;
+  left: 16px;
+  z-index: 200;
+  padding: 10px 14px;
+  color: var(--ink);
+  background: var(--paper);
+  font: 600 0.75rem/1 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.skip-link:focus {
+  top: 16px;
+}
+
+.sound-caption {
+  position: fixed;
+  z-index: 120;
+  left: 50%;
+  bottom: 20px;
+  max-width: calc(100vw - 32px);
+  padding: 9px 13px;
+  border: 1px solid rgba(214, 154, 69, 0.38);
+  color: var(--paper-light);
+  background: rgba(12, 13, 16, 0.94);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  font: 500 0.62rem/1.35 var(--mono);
+  letter-spacing: 0.05em;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.sound-caption.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}

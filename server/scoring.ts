@@ -1,5 +1,5 @@
 import type { EvidenceSlip, ScoreBreakdown, VerdictRequest } from '../shared/types.js';
-import { getCase } from '../shared/cases.js';
+import { getCase } from '../shared/cases/index.js';
 
 export function scoreVerdict(request: VerdictRequest, evidence: EvidenceSlip[]): ScoreBreakdown {
   const caseFile = getCase(request.caseId);

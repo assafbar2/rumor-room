@@ -123,4 +123,4 @@ Completed locally on August 28, 2026:
 5. Every surfaced live URL returned HTTP 200.
 6. The full Zelda browser path reached the correct receipt with no console errors.
 
-See `docs/LIVE_VALIDATION.md` for search IDs, effective queries, and results. The remaining acceptance test is repeating the browser path on the deployed Cloud Run URL.
+See `docs/internal/LIVE_VALIDATION.md` for search IDs, effective queries, and results, including the browser path repeated on the deployed Cloud Run URL.

@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased — Production revision `rumor-room-00006-2tj`
+
+### Changed
+
+- Gemini's search queries are now sent to Parallel ahead of case-authored coverage queries (previously the reverse), with a five-query cap; both sets are logged separately as `agentQueries` and `coverageQueries`.
+- Cloud Run is capped at one instance so the in-process session ledger serves both investigations and verdicts.
+- `shared/cases.ts` split into `shared/cases/` (one file per case plus shared sources); `src/styles.css` split into `src/styles/`. Built output is unchanged.
+- Verification and operations documents moved to `docs/internal/`; README gains a "Proof this is live" table.
+
+### Added
+
+- Published demo video (`https://youtu.be/ovbrx_9RvN8`): Gemini TTS narration opening with build stack, purpose, and goal; visible cursor; burned-in captions; recorded live against revision `00006`.
+
 ## 0.1.0 — Local release candidate
 
 ### Added

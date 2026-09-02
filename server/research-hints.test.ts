@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cases } from '../shared/cases.js';
+import { cases } from '../shared/cases/index.js';
 import { researchMoves } from '../shared/types.js';
 import { getResearchHints } from './research-hints.js';
 

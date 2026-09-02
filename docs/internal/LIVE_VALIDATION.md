@@ -10,6 +10,8 @@ Validated locally on August 28, 2026 using:
 
 No API key, OAuth code, access token, or credential file is recorded in this repository.
 
+The runs below predate the query-composition change described in `docs/ARCHITECTURE.md`; at that time authored queries were sent ahead of Gemini's. Current revisions send Gemini's queries first and log both sets separately.
+
 ## Case 014 — Zelda / Fresh Cut
 
 Parallel search ID: `search_714f7e26b14cc6ce64aded2d5f8f9dd8`
@@ -70,8 +72,6 @@ For every run:
 4. The server discarded any citation URL not present in that exact Parallel result set.
 5. Every surfaced live URL was opened successfully and returned HTTP 200 during validation.
 
-## Remaining validation
-
 ## Production validation
 
 The same Zelda browser path passed on the public Cloud Run deployment on August 29, 2026.
@@ -85,4 +85,15 @@ The same Zelda browser path passed on the public Cloud Run deployment on August 
 - WCAG A/AA violations: 0 on desktop and mobile
 - Sound-on searches: verified non-blocking in production
 
-See `docs/DEPLOYMENT_REPORT.md` for build, runtime, performance, and log evidence.
+### Revision `rumor-room-00006-2tj` — September 2, 2026
+
+Deployed with the one-instance cap and Gemini-first query composition. Verified against the public URL:
+
+- `/api/health`: `mode: live`, `provider: gemini-parallel`, `ready: true`.
+- Cloud Run `maxScale`: 1.
+- Zelda / Fresh Cut investigation over HTTP: 21.0 seconds, two live receipts (GameSpot contradicts, The Hollywood Reporter supports), verdict correct, score 1,575 with evidence scored from the same session.
+- Production Parallel search ID: `search_85ade4fdd5244f13f2e9fa33bed17c66`, six results.
+- Log entry `agentQueries` held Gemini's three queries; `coverageQueries` held the three authored ones; `searchQueries` sent to Parallel was Gemini's three followed by the first two authored queries.
+- Desktop (1440×900) and Pixel 7 Chromium: **Parallel live search** badge, four claims, four moves, styled board, zero console errors.
+
+See `docs/internal/DEPLOYMENT_REPORT.md` for build, runtime, performance, and log evidence.

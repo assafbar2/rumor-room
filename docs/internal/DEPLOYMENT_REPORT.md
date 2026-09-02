@@ -4,12 +4,12 @@
 
 | Field | Result |
 | --- | --- |
-| Date | August 29, 2026 |
+| Date | September 2, 2026 (previous: August 29, 2026) |
 | Google Cloud project | `direct-subject-497307-p8` |
 | Region | `us-central1` |
-| Cloud Build ID | `aed70f48-f6a7-45e8-8045-9648fed79e1c` |
+| Cloud Build ID | `cc9de471-c967-47c4-8bbc-b6d6d810451a` (previous: `aed70f48-f6a7-45e8-8045-9648fed79e1c`) |
 | Cloud Run service | `rumor-room` |
-| Revision | `rumor-room-00005-8zc` |
+| Revision | `rumor-room-00006-2tj` (previous: `rumor-room-00005-8zc`) |
 | Traffic | 100% |
 | Runtime identity | `rumor-room-runtime` service account |
 | Public URL | `https://rumor-room-dpq2d26l7q-uc.a.run.app` |
@@ -20,14 +20,16 @@
 - Dedicated Artifact Registry Docker repository: `rumor-room`.
 - Dedicated runtime service account: `rumor-room-runtime`.
 - Secret Manager secret: `parallel-api-key`.
-- Public Cloud Run service with zero minimum instances and five maximum instances.
+- Public Cloud Run service with zero minimum instances and one maximum instance (five at revision `00005` and earlier).
 - Immutable container image tagged with the Cloud Build ID.
 
 The runtime identity has Vertex AI User, log writer, and secret accessor permissions. The Cloud Build identity can write the image, deploy Cloud Run, and act as the runtime identity.
 
 ## Deployment result
 
-The current Cloud Build completed successfully in 2 minutes 39 seconds. The Docker build:
+Revision `00006` (Cloud Build `cc9de471`, 2 minutes 35 seconds) added the one-instance cap, Gemini-first query composition with separate `agentQueries`/`coverageQueries` log fields, and the per-case source layout under `shared/cases/`. Its verification is recorded in `docs/internal/LIVE_VALIDATION.md`. The section below describes the `00005` build.
+
+The `00005` Cloud Build completed successfully in 2 minutes 39 seconds. The Docker build:
 
 - Installed from `package-lock.json`.
 - Reported zero npm vulnerabilities.
@@ -114,11 +116,12 @@ The workflow uses the current Node 24-compatible `actions/checkout@v7` and `acti
 
 ## Demo Artifact
 
-The final local submission video is `artifacts/rumor-room-demo.mp4`:
+Published: `https://youtu.be/ovbrx_9RvN8` (unlisted). Source file `artifacts/rumor-room-demo-captioned.mp4`, September 2, 2026:
 
-- Duration: 176.1 seconds.
-- Resolution: 1440×900 at 30 fps.
-- Video: H.264.
-- Audio: normalized AAC voiceover.
-- Decode check: clean.
-- Content: three hand-designed cases, four real production Parallel searches, three correct verdict receipts, and the live-status badge.
+- Duration: 179 seconds.
+- Resolution: 1440×900 at 30 fps, H.264, loudness-normalized AAC narration.
+- Narration: Gemini 2.5 Pro text-to-speech on Vertex AI (voice "Charon"); the script opens with the build stack, purpose, and goal.
+- Recorded with Playwright against production revision `rumor-room-00006-2tj`: three live Parallel searches (Zelda Trace It, Zelda Fresh Cut, Barbie Studio Line), two correct verdict receipts, visible animated cursor, burned-in captions. A caption-free `rumor-room-demo.mp4` plus `rumor-room-demo.en.srt` is also in `artifacts/`.
+- Build tooling is in `artifacts/demo-build/` (gitignored).
+
+The earlier 176.1-second recording from August 29 is superseded.

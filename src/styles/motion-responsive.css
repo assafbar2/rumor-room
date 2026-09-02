@@ -1,0 +1,263 @@
+@keyframes rotate {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes projector-sweep {
+  0% { transform: translateX(0) rotate(-4deg); opacity: 0; }
+  18% { opacity: 0.09; }
+  100% { transform: translateX(125vw) rotate(5deg); opacity: 0.035; }
+}
+
+@keyframes pin-slip {
+  from { opacity: 0; transform: translateY(-24px) rotate(-2deg) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) rotate(-0.3deg) scale(1); }
+}
+
+@keyframes receipt-in {
+  from { opacity: 0; transform: translateY(26px) rotate(-0.7deg) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+}
+
+@media (max-width: 1180px) {
+  .claim-grid,
+  .move-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .claim-card {
+    min-height: 250px;
+  }
+}
+
+@media (max-width: 940px) {
+  .board-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .evidence-tray {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .evidence-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+@media (max-width: 680px) {
+  .topbar {
+    min-height: 68px;
+    padding: 10px 14px;
+  }
+
+  .brand-kicker,
+  .runtime-badge {
+    display: none;
+  }
+
+  .icon-button span:last-child {
+    display: none;
+  }
+
+  .icon-button {
+    min-width: 40px;
+    justify-content: center;
+  }
+
+  .text-button {
+    padding: 0 5px;
+    font-size: 0.57rem;
+  }
+
+  .briefing-screen,
+  .loading-screen {
+    min-height: calc(100vh - 68px);
+  }
+
+  .briefing-screen {
+    padding: 58px 12px 24px;
+  }
+
+  .briefing-folder {
+    padding: 32px 22px 26px;
+  }
+
+  .briefing-stamp {
+    top: 20px;
+    right: 16px;
+    font-size: 0.62rem;
+  }
+
+  .briefing-folder h1 {
+    max-width: 75%;
+    font-size: clamp(2.8rem, 16vw, 4.6rem);
+  }
+
+  .mission-strip {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .how-to-sequence {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .how-to-sequence > div:nth-child(3) {
+    border-top: 1px solid rgba(23, 25, 29, 0.16);
+    border-left: 0;
+  }
+
+  .how-to-sequence > div:nth-child(4) {
+    border-top: 1px solid rgba(23, 25, 29, 0.16);
+  }
+
+  .briefing-facts {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 0;
+  }
+
+  .briefing-facts > div:nth-child(3) {
+    grid-column: 1 / -1;
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .board-shell {
+    padding: 0;
+  }
+
+  .case-board {
+    border-right: 0;
+    border-left: 0;
+  }
+
+  .case-header {
+    align-items: flex-start;
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .case-stats {
+    gap: 10px;
+  }
+
+  .campaign-score-readout {
+    min-width: auto;
+  }
+
+  .campaign-score-readout span,
+  .campaign-score-readout small {
+    display: none;
+  }
+
+  .campaign-score-readout strong {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .case-header h1 {
+    font-size: 2rem;
+  }
+
+  .token-counter {
+    min-width: auto;
+    padding-left: 14px;
+  }
+
+  .token-counter > span,
+  .token-counter > div {
+    display: none;
+  }
+
+  .token-counter strong {
+    grid-row: auto;
+    grid-column: auto;
+    font-size: 2rem;
+  }
+
+  .investigation-column,
+  .evidence-tray {
+    padding: 24px 14px;
+  }
+
+  .section-heading,
+  .section-heading.compact {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .section-heading > p {
+    text-align: left;
+  }
+
+  .flow-strip {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .flow-strip i {
+    display: none;
+  }
+
+  .claim-grid,
+  .move-grid,
+  .evidence-list {
+    grid-template-columns: 1fr;
+  }
+
+  .claim-card {
+    min-height: 225px;
+  }
+
+  .move-card {
+    min-height: 146px;
+  }
+
+  .accusation-bar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .accusation-bar strong {
+    white-space: normal;
+  }
+
+  .score-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .score-grid > div:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid rgba(23, 25, 29, 0.18);
+  }
+
+  .score-grid > div:nth-child(4) {
+    border-top: 1px solid rgba(23, 25, 29, 0.18);
+  }
+
+  .verdict-stamp {
+    position: static;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .projector-beam {
+    display: none;
+  }
+}

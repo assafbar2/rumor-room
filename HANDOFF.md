@@ -2,7 +2,9 @@
 
 ## Summary
 
-The Rumor Room is now a complete web game for the Agentic Cinema hackathon. Players receive four plausible entertainment claims and four research tokens, meaning four total research turns. They use structured investigation cards with saved evidence locally or Gemini + Google ADK + Parallel in live mode, build an evidence board, and accuse the unsupported claim.
+The Rumor Room is a complete, deployed web game for the Agentic Cinema hackathon. Players receive four plausible entertainment claims and four research tokens, meaning four total research turns. They use structured investigation cards with saved evidence locally or Gemini + Google ADK + Parallel in live mode, build an evidence board, and accuse the unsupported claim.
+
+The AI layer is Gemini 3.7 Flash on Vertex AI, orchestrated with Google ADK 2.0. Wherever this document or the design doc says "Google Cloud Agent Builder", read it as the Google-hosted agent option that was chosen at design time; the shipped implementation is Google ADK.
 
 The design intentionally avoids ordinary media trivia. Players are evaluated on investigation strategy, source provenance, freshness, and evidence quality rather than prior knowledge.
 
@@ -16,7 +18,7 @@ The design intentionally avoids ordinary media trivia. Players are evaluated on 
 - Ship three carefully authored cases rather than an endless generator.
 - Use sparse electro-noir music rather than a generic jazz or saxophone loop.
 - Borrow interaction principles from Prime Suspects, Suspect Memories, Guess My Number, and Composer Muse, but do not reuse their code or assets.
-- Build the deterministic game shell locally first, then replace fixture investigation responses with the mandatory Gemini, Google Cloud Agent Builder, and Parallel runtime path.
+- Build the deterministic game shell locally first, then replace fixture investigation responses with the mandatory Gemini, Google ADK, and Parallel runtime path.
 
 ## MVP
 
@@ -32,7 +34,7 @@ The design intentionally avoids ordinary media trivia. Players are evaluated on 
 
 1. Build the noir board, authored cases, investigation cards, scoring, and audio locally with deterministic fixture evidence.
 2. Add a narrow provider boundary for investigation requests and evidence responses.
-3. Implement the provider with Gemini on Google Cloud Agent Builder or Google ADK/Agent Engine.
+3. Implement the provider with Gemini on Google ADK (Vertex AI).
 4. Connect Parallel Search at runtime and render its cited evidence on the board.
 5. Remove or disable fixture mode in the hosted submission path.
 
@@ -51,17 +53,18 @@ Completed locally:
 
 ## Remaining external gates
 
-1. Upload the finished 176.1-second demo video and add its public URL to `docs/SUBMISSION.md`.
+None. The demo video is published at `https://youtu.be/ovbrx_9RvN8` and linked from `README.md` and `docs/SUBMISSION.md`. Submit the Devpost entry using `docs/SUBMISSION.md`.
+
 
 ## Important constraints
 
 - Parallel Search must be visible and essential during gameplay.
-- Gemini and Google Cloud Agent Builder are the only AI layer.
+- Gemini through Google ADK on Vertex AI is the only AI layer.
 - The repository must remain safe to publish publicly; never commit credentials.
 - Require explicit approval before committing, pushing, deploying, or creating remote resources.
 
 ## Production
 
 - URL: `https://rumor-room-dpq2d26l7q-uc.a.run.app`
-- Revision: `rumor-room-00005-8zc`
+- Revision: `rumor-room-00006-2tj` (September 2, 2026; one-instance cap, Gemini-first query composition)
 - Status: live Gemini + Parallel path verified in-browser and in Cloud Run logs.

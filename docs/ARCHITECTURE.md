@@ -61,7 +61,7 @@ Both providers return the same `InvestigationResponse` shape from `shared/types.
 
 ### Fixture provider
 
-`server/providers/fixture-provider.ts` returns authored evidence from `shared/cases.ts`. It exists for deterministic UX work, tests, demos without credentials, and failure isolation.
+`server/providers/fixture-provider.ts` returns authored evidence from `shared/cases/` (one file per case, shared official sources in `sources.ts`). It exists for deterministic UX work, tests, demos without credentials, and failure isolation.
 
 Fixture mode is not permitted in production. `server/config.ts` throws during startup when `APP_ENV=production` and `INVESTIGATION_MODE` is not `live`.
 
@@ -76,6 +76,21 @@ Fixture mode is not permitted in production. `server/config.ts` throws during st
 Gemini must call the Parallel tool exactly once. The tool uses Parallel's official TypeScript SDK and requests live, date-aware excerpts. Gemini then classifies a compact evidence bundle by stance, quality, independence, and provenance.
 
 Every case also supplies an ISO research cutoff. Gemini is instructed to judge the claim within that time boundary and ignore later developments, which keeps historical cases fair and reproducible.
+
+### Query composition: Gemini leads, the case file covers
+
+Gemini writes the research objective and two to three search queries for every move. `server/research-hints.ts` adds two to three case-authored coverage queries per claim and move. `mergeSearchQueries()` in `live-provider.ts` sends Gemini's queries first, then appends the coverage queries, de-duplicates, and caps the list at five. Parallel's API recommends two to three queries but accepts more; the cap keeps Gemini's full query set intact and leaves room for two authored ones.
+
+The coverage queries exist because every case is historical with a fixed research cutoff, and the three cases were source-audited before shipping. The author already knows a specific correction, denial, or credit exists on the record; the coverage query makes sure Parallel's retrieval sees that neighbourhood of the web on every run, so a round never comes back empty because Gemini phrased a query differently. Some coverage queries are pointed — the Barbie Studio Line move includes `Gerwig Baumbach representative no legitimacy` — and that is disclosed here rather than buried.
+
+What stays with Gemini and Parallel:
+
+- Gemini decides the objective and its own queries; the coverage queries never displace them.
+- Parallel performs the live retrieval. A coverage query cannot produce a source that is not on the web.
+- Gemini reads and classifies whatever comes back — stance, quality, independence, provenance.
+- Every URL on the board must be present in the runtime Parallel response (see the citation trust boundary below).
+
+Both query sets are written to the structured `parallel_search_completed` log entry as `agentQueries` and `coverageQueries`, so anyone reading Cloud Run logs can see exactly which queries came from the model and which from the case file. A future version with generated or daily cases would ship without coverage queries and rely on Gemini alone.
 
 ## Citation trust boundary
 
@@ -109,6 +124,14 @@ The production image contains:
 - Production-only dependencies.
 
 Cloud Run serves the client and API from one origin. The runtime service account calls Vertex AI. The Parallel API key is mounted from Secret Manager. No browser-visible key or cloud credential is used.
+
+### Session state and instance count
+
+Player sessions are short (one case lasts four to six minutes) and hold at most forty evidence slips, so the evidence ledger and the investigation rate limit are kept in process memory rather than in a database. This keeps the verdict path at a few milliseconds and the deployment to one container with no external state dependency.
+
+The trade-off is that the ledger is per instance. `cloudbuild.yaml` deploys with `--max-instances=1` so every request in a session reaches the same process. One instance is sized for the expected load: concurrency 40 with latency dominated by the Gemini and Parallel round trip, not by CPU.
+
+A future version that needs horizontal scale would move the ledger to Firestore or Memorystore keyed by session ID and raise the instance cap; nothing else in the request path would change.
 
 ## Failure behavior
 

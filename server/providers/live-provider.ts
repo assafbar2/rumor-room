@@ -8,7 +8,7 @@ import {
 } from '@google/adk';
 import Parallel from 'parallel-web';
 import { z } from 'zod';
-import { getCase } from '../../shared/cases.js';
+import { getCase } from '../../shared/cases/index.js';
 import type {
   EvidenceQuality,
   EvidenceSlip,
@@ -50,7 +50,15 @@ interface ParallelSearchClient {
 
 interface ParallelToolOptions {
   afterDate?: string;
+  /** Case-authored coverage queries; appended after Gemini's own queries, never ahead of them. */
   queryHints?: string[];
+}
+
+// Parallel recommends 2-3 queries but sets no hard cap; 5 keeps Gemini's full set plus two authored ones.
+const MAX_SEARCH_QUERIES = 5;
+
+export function mergeSearchQueries(agentQueries: string[], coverageQueries: string[] = []) {
+  return [...new Set([...agentQueries, ...coverageQueries])].slice(0, MAX_SEARCH_QUERIES);
 }
 
 export function createParallelTool(
@@ -65,7 +73,7 @@ export function createParallelTool(
       'Search the live web with Parallel. Returns titles, URLs, publication dates, and targeted excerpts. Use this for every investigation.',
     parameters: parallelSearchInput,
     execute: async ({ objective, searchQueries, maxResults }) => {
-      const effectiveQueries = [...new Set([...(options.queryHints ?? []), ...searchQueries])].slice(0, 3);
+      const effectiveQueries = mergeSearchQueries(searchQueries, options.queryHints);
       const result = await parallel.search({
         objective,
         search_queries: effectiveQueries,
@@ -91,6 +99,8 @@ export function createParallelTool(
         resultCount: result.results.length,
         model: config.googleModel,
         objective,
+        agentQueries: searchQueries,
+        coverageQueries: options.queryHints ?? [],
         searchQueries: effectiveQueries,
         afterDate: options.afterDate,
       }));

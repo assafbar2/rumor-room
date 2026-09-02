@@ -1,0 +1,147 @@
+.investigation-dock {
+  padding-top: 34px;
+}
+
+.selected-indicator {
+  padding: 7px 10px;
+  border: 1px solid rgba(214, 154, 69, 0.3);
+  color: var(--tungsten-pale);
+  background: rgba(214, 154, 69, 0.06);
+  font: 500 0.6rem/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.move-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.move-card {
+  position: relative;
+  display: flex;
+  min-height: 174px;
+  padding: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid rgba(231, 220, 196, 0.12);
+  color: var(--paper-light);
+  background: #21242a;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.move-card:hover:not(:disabled) {
+  border-color: rgba(214, 154, 69, 0.56);
+  background: #272a30;
+  transform: translateY(-3px);
+}
+
+.move-card:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.move-number {
+  color: #777a7e;
+  font: 500 0.58rem/1 var(--mono);
+}
+
+.move-title {
+  margin-top: 14px;
+  font: 600 1.15rem/1 var(--condensed);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.move-description {
+  margin-top: 8px;
+  color: #aaa89f;
+  font-size: 0.83rem;
+  line-height: 1.32;
+}
+
+.move-best {
+  margin-top: auto;
+  padding-top: 12px;
+  color: #757873;
+  font: 400 0.56rem/1.2 var(--mono);
+  text-transform: uppercase;
+}
+
+.token-cost {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #af9a79;
+  font: 500 0.52rem/1 var(--mono);
+  text-transform: uppercase;
+}
+
+.token-cost i {
+  width: 8px;
+  height: 8px;
+}
+
+.accusation-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 26px;
+  padding: 16px 18px;
+  border: 1px solid rgba(158, 48, 48, 0.45);
+  background: #1b1719;
+}
+
+.accusation-bar > div {
+  min-width: 0;
+}
+
+.accusation-bar strong {
+  display: block;
+  margin-top: 4px;
+  color: #c9c1af;
+  font: 500 0.83rem/1.25 var(--condensed);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.accuse-button {
+  flex: 0 0 auto;
+  min-height: 43px;
+  padding: 0 18px;
+  border: 1px solid var(--red-bright);
+  color: #f2dfd3;
+  background: var(--red);
+  cursor: pointer;
+  font: 700 0.72rem/1 var(--condensed);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.accuse-button:hover:not(:disabled) {
+  background: #b63c38;
+  transform: translateY(-2px);
+}
+
+.accuse-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.error-banner {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px solid rgba(203, 87, 81, 0.5);
+  color: #ecc2b5;
+  background: #29191b;
+  font: 500 0.7rem/1.4 var(--mono);
+}

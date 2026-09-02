@@ -1,5 +1,7 @@
 # Three-Minute Demo Script
 
+> Published recording: [youtu.be/ovbrx_9RvN8](https://youtu.be/ovbrx_9RvN8). The shipped narration opens with the build stack, purpose, and goal, then follows the beats below; the exact text read is in `artifacts/rumor-room-demo-voice.txt`.
+
 ## 0:00–0:20 — Hook
 
 Show the case folder for **The Date That Lied**.
