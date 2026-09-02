@@ -95,11 +95,9 @@ Remote Axe scans found zero WCAG A/AA violations on both the briefing and invest
 - The selected claim has a persistent solid outline and **Selected** ribbon.
 - The board displays the three-step flow, research-turn count, campaign score, and **Start over** action.
 
-## Remaining release work
+## Release status
 
-- Resolve the organizer eligibility issue described in the final project review.
-- Replace public demo screenshots/video sources with a fictional or mock corpus if submitting under the organizer's published-material guidance.
-- Publish the repository and compliant video only after those issues are resolved.
+Repository public, demo video published, live deployment verified. No release work remains; see `HANDOFF.md`.
 
 ## Repository CI
 
