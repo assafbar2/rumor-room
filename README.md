@@ -4,6 +4,10 @@
 
 Built for the **Agentic Cinema: The Blockbuster Hackathon**, Parallel partner track.
 
+> **Looking to play the current Rumor Room?** [Start the ten-case game →](https://assafbar2.github.io/Rumor-Room-Muse-Edition/)
+>
+> This repository preserves the **original live-AI investigation build**: three entertainment cases using Gemini, Google ADK, and Parallel Search. The current game is a separate collection of authored fictional mysteries that runs without inference calls. [Read how the project evolved →](https://www.barnir.co/builds/rumor-room)
+
 ## Play the game
 
 ### **[Launch The Rumor Room →](https://rumor-room-dpq2d26l7q-uc.a.run.app)** · **[Watch the 3-minute demo →](https://youtu.be/ovbrx_9RvN8)**
